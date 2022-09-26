@@ -1,0 +1,138 @@
+
+
+
+
+<div class="container-fluid h-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12">
+      <div class="card border border-0">
+        <div class="card-body1 p-0">
+          <div class="row g-0">
+            <div class="col-lg-9 col-sm-12 col-12 py-3 px-5">
+              <div class="p-5">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-5"
+                >
+                  <h1 class="fw-bold mb-0 text-black">Cart</h1>
+                  <h6 class="mb-0 text-muted">{{data.length}} items</h6>
+                </div>
+
+                <hr class="my-4" />
+                {{#each data}}
+                  <div
+                    class="row mb-4 g-0 d-flex justify-content-between align-items-center"
+                  >
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 ">
+                      <img
+                        src="/product_images/{{this.product._id}}.jpg"
+                        class="imgCrop m-auto ms-4"
+                        width="50px"
+                        height="50px"
+                        class="card-img-bottom"
+                        alt="..."
+                      />
+                      
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-3 ">
+                      <h5 class="text-muted">{{this.product.Product_name}}</h5>
+                      
+                      <div class="d-flex my-4">
+                        <button
+                          class="input-number-decrement"
+                          id="{{this.product._id}}{{this._id}}"
+                          onclick='changeQuantity("{{this._id}}","{{this.product._id}}","{{this.userId}}","-1")'
+                        >–</button><input
+                          class="input-number text-center"
+                          id="{{this.product._id}}"
+                          type="text"
+                          value="{{this.cartItems.quantity}}"
+                          min="0"
+                          disabled
+                        />
+                        <button
+                          class="input-number-increment"
+                          onclick='changeQuantity("{{this._id}}","{{this.product._id}}","{{this.userId}}","1")'
+                        >+</button>
+                      </div>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2  ">
+                      <h6 class="mb-0">₹{{this.product.Price}}</h6>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-0 col-xl-2 d-sm-none d-lg-block ">
+                      <button
+                        class="text-center my-2 align-items-end d-flex btn btn-danger "
+                        onclick="removeFromCart('{{this._id}}','{{this.product._id}}')"
+                      >Remove</button>
+                    </div>
+                    <div class="col-sm-1 col-md-1  d-lg-none d-none d-sm-block">
+                      <button
+                        class="text-center  align-items-end d-flex text-danger btn-none"
+                        
+                      >X</button>
+                    </div>
+                    
+                  </div>
+                  <hr class="my-4" />
+                {{/each}}
+
+                <div class="pt-5">
+                  <h6 class="mb-0"><a href="/" class="text-body"><i
+                        class="fas fa-long-arrow-alt-left me-2"
+                      ></i>Back to shop</a></h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-12 col-12 p-4 mt-5 border border-1" style="height: 500px;">
+        <h3 class="mb-4">Order Summary</h3>
+        <div class="d-flex justify-content-between w-100">
+          <p >Price</p>
+          <p id="subtotal">₹{{total}}</p>
+        </div>
+        <div class="d-flex justify-content-between w-100">
+          <p>Discount</p>
+          <p>₹ 0</p>
+        </div>
+        <div class="d-flex justify-content-between w-100">
+          <p>Shipping</p>
+          <p class="purple">Free</p>
+        </div>
+        <div class="d-flex justify-content-between w-100">
+          <p>Coupon Applied</p>
+          <p>₹0.00</p>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between w-100">
+          <p class="purple">TOTAL</p>
+          <p class="purple" id="total">₹{{total}}</p>
+        </div>
+        <p>Estimated Delivery by <span class="fw-bold">01 Aug 2022</span></p>
+        <form action="/address" method="get">
+          <input type="text" class="form-control" placeholder="Coupon Code" />
+          <button class="btn bg-primary text-white w-100 mt-3">
+            CONTINUE TO SHIPPING
+          </button>
+        </form>
+      </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function changeQuantity(cartId, productId, userId, count) { let val =
+  document.getElementById(productId).value ; val = parseInt(val) ; count =
+  Number(count); $.ajax({ url: "/cart/changeQuantity", data: { cart: cartId,
+  user: userId, product: productId, count: count }, method: "POST", success:
+  function(data) { $("#subtotal").text(data.total) ; $("#total").text(data.total) ; val = val + count;
+  document.getElementById(productId).value = val; if (val <= 1) {
+  //document.getElementById(`${productId}${cartId}`).disabled = true;
+  $(`#${productId}${cartId}`).attr("disabled", true); } else {
+  $(`#${productId}${cartId}`).attr("disabled", false); } }, error: function(err)
+  {} }) } function removeFromCart(cartId, productId) { console.log(cartId,
+  productId); $.ajax({ url: "/cart/remove", data: { cart: cartId, product:
+  productId, }, method: "POST", success: function(data) { console.log("deleted successfully");
+  window.location.reload(); }, error: function(err) {console.log(err)} }) }
+</script>

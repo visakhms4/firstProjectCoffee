@@ -1,0 +1,87 @@
+{{>admin_sidebar}}
+<section class="add" style="margin-left: 12rem;">
+  <div class=" mt-5">
+    <div >
+      <h2>Add Category</h2> 
+      {{#with category}}
+      <form action="/admin/Category" method="post">
+        <div class="form-group">
+          <label for="Name">Category Name</label>
+          <input type="text" value="{{Category_name}}" name="Name" class="form-control" id="Name" />
+
+        </div>
+        <div class="form-group">
+          <label for="Description">Description</label>
+          <input
+            type="text"
+            name="description" 
+            class="form-control"
+            style="height:7rem ;"
+            id="Description"
+            value="{{Category_description}}"
+          />
+        </div>
+         <div class="form-group">
+          <label for="Name">Category Discount</label>
+          <input type="text" value="{{cdiscount}}" name="cdiscount" class="form-control" id="Name" />
+
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Add</button>
+      </form>
+       {{/with}}
+     
+
+    </div>
+
+  </div>
+
+</section>
+
+
+{{!-- <section class="list mt-5 pt-5"  >
+  <div class="container border-none mt-3">
+    <div > --}}
+      <section class=" p-5" style="margin-left: 8rem;">
+        <table class="table col-md-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category name</th>
+            <th scope="col">Description</th>
+             <th scope="col">Discounts</th>
+            <th scope="col">Options</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {{#each category}}
+            <tr>
+              <th scope="row">{{@index}}</th>
+              <td>{{this.Category_name}}</td>
+              <td>{{this.Category_description}}</td>
+              <td>{{this.cdiscount}}</td>
+              <td>
+                <a
+                  class="btn btn-primary"
+                  href="/admin/category/{{this._id}}"
+                >Edit
+                </a></td>
+              <td>
+                <a
+                  class="btn btn-danger"
+                  href="/admin/deleteCategory/{{this._id}}"
+                  onclick="return confirm('Are you sure you want to delete {{this.Category_name}} category?');"
+                >Delete
+                </a></td>
+            </tr>
+          {{/each}}
+
+        </tbody>
+      </table>
+      </section>
+
+    {{!-- </div>
+  </div>
+
+</section> --}}

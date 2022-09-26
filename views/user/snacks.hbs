@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="/public/stylesheets/products.css" />
+
+<section class="bg-white">
+  <div class="container-fluid mt-5 vh-100">
+    <div class="row m-5">
+      {{#each snacks}}
+
+        <div class="col-md-3">
+
+          <div class="card m-3" style="width: 18rem; height:25rem">
+            <img
+              src="/product_images/{{this._id}}.jpg"
+              width="18rem"
+              height="50%"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body1 p-2">
+              <h5 class="card-title1">{{this.Product_name}}</h5>
+              <p class="card-text2 mb-1">{{this.description}}</p>
+              <div class="d-flex justify-content-between mb-2" style="width: 100%;">
+                <p class="item-price my-auto"><strike>₹{{this.Price}}</strike>
+                  <b>₹{{this.cd_price}}</b></p>
+                <div class="d-flex">
+                  <p class="item-rating my-auto me-2">
+                    <b>{{this.Rating}}</b></p>
+
+                  <i
+                    class="fa fa-star my-auto"
+                    style="color: rgb(227, 239, 67)"
+                  ></i>
+                </div>
+              </div>
+
+              <button class="ordrbtn">
+
+                <a href="/add-to-cart/{{this._id}}" class="button-trend">Add to
+                  cart</a>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      {{/each}}
+      {{#unless snacks}}
+        <h1>No Products are available</h1>
+      {{/unless}}
+    </div>
+  </div>
+</section>

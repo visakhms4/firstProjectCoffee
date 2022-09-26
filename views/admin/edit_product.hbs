@@ -1,0 +1,93 @@
+<div class="container mt-6 border-0 h-auto float-left">
+  <div class="row d-flex justify-content-center">
+{{#with product}}
+
+    <form
+      action="/admin/editProduct/{{_id}}"
+      method="post"
+      enctype="multipart/form-data"
+      class="loginBox col-md6"
+    >
+      <label class="fw-bold" for="productname">Product name</label>
+      <input
+        type="text"
+        name="name"
+        id="username"
+        value="{{Product_name}}"
+        class="w-100 p-2 m-2 form-control"
+      />
+
+      <label class="fw-bold" for="des">Description</label>
+
+      <input
+        type="text"
+        name="description"
+        id="des"
+        value="{{description}}"
+        class="w-100 p-2 m-2 form-control"
+      />
+      <label class="fw-bold" for="rating">Rating</label>
+      <input
+        type="text"
+        name="rating"
+        id="rating"
+        value="{{Rating}}"
+        class="w-100 p-2 m-2 form-control"
+      />
+
+      <label class="fw-bold" for="cat">Category</label>
+      <input
+        type="text"
+        name="category"
+        id="cat"
+        value="{{Category}}"
+        class="w-100 p-2 m-2 form-control"
+      />
+
+      <label class="fw-bold" for="">Price</label>
+      <input
+        type="number"
+        name="price"
+        id="price"
+        value="{{Price}}"
+        class="w-100 p-2 m-2 form-control"
+      />
+   <label class="fw-bold" for="">Discounts</label>
+      <input
+        type="number"
+        name="pdiscount"
+        id="price"
+        value="{{pdiscount}}"
+        class="w-100 p-2 m-2 form-control"
+      />
+
+      <img src="/product_images/{{_id}}.jpg" width="50px" alt="">
+
+      <label class="fw-bold" for="">Image</label>
+      <input
+        type="file"
+        name="image"
+        id="image"
+        class="w-100 p-2 m-2 form-control"
+        onchange="viewImage(event)"
+      />
+
+      {{! <input type="submit" class="btn btn-success" value="submit"> }}
+
+      <button
+        class="btn btn-success primary active btn-lg"
+        type="submit"
+      >Submit</button>
+
+    </form>
+
+{{/with}}
+  </div>
+
+</div>
+
+<script>
+  function viewImage(event){
+    document.getElementById('image').src = URL.createObjectURL(event.target.files[0] )    
+  }
+</script>

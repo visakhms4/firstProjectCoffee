@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light d-flex >
+ 
+  <a class="navbar-brand " href="/"><img
+      src="/images/WhatsApp Image 2022-08-27 at 12.57.11 AM.jpeg"
+      style="width: 50px;"
+      alt=""
+    /></a>
+    
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Products
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" type="submit" href="/products">Drinks</a></li>
+          <li><a class="dropdown-item" type="submit" href="/products/snacks">Snacks</a></li>
+        </ul>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Legacy
+      </li>
+          <a class="nav-link" href="#">Offers
+            <a class="nav-link" href="/profile">Profile
+             
+           
+
+            
+           
+
+<div class="container-fluid" >
+
+  </div>
+    </ul>
+  </div>
+  <div class="d-flex justify-content-between" style="width:20rem;" >
+    <form>
+      
+      <a href="#" > 
+        <input  class="form-control me-2 rounded-pill ml--3rem" type="text " placeholder="Cappucino" aria-label="Search" style="width: 171px;"> 
+      </a>
+      
+
+    </form>
+    {{#if user}}
+
+    <a href="/cart"><img src="/images/icons8-shopping-cart-24.png" alt=""></a>
+    <a class="nav-link " href="/signin">Login </a>
+    {{else}}
+      <a href="/cart"><img src="/images/icons8-shopping-cart-24.png" alt=""></a>
+    <a class="nav-link " href="/logout">Logout </a>
+{{/if}}
+
+
+  </div>
+</nav>

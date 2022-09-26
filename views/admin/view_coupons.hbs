@@ -1,0 +1,77 @@
+{{>admin_sidebar}}
+<section class="add" style="margin-left: 12rem;">
+  <div class=" mt-5">
+    <div >
+      <h2>Add Coupon</h2> 
+      <form action="/admin/coupon/add" method="post">
+        <div class="form-group">
+          <label for="Name">Coupon Code</label>
+          <input type="text" name="coupon" class="form-control" id="Name" />
+        </div>
+        <div class="form-group">
+          <label for="Description">Description</label>
+          <input
+            type="text"
+            name="description" 
+            class="form-control"
+            style="height:7rem ;"
+            id="Description"
+          />
+        </div>
+         <div class="form-group">
+          <label for="Name">Coupon Discount</label>
+          <input type="text" name="discount" class="form-control" id="Name" />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Add</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+{{!-- <section class="list mt-5 pt-5"  >
+  <div class="container border-none mt-3">
+    <div > --}}
+      <section class=" p-5" style="margin-left: 8rem;">
+        <table class="table col-md-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Coupon name</th>
+            <th scope="col">Description</th>
+             <th scope="col">Discounts</th>
+            <th scope="col">Options</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {{#each coupon}}
+            <tr>
+              <th scope="row">{{@index}}</th>
+              <td>{{this.coupon_code}}</td>
+              <td>{{this.description}}</td>
+              <td>{{this.discount}}</td>
+              <td>
+                <a
+                  class="btn btn-primary"
+                  href="/admin/editcoupon/{{this._id}}"
+                >Edit
+                </a></td>
+              <td>
+                <a
+                  class="btn btn-danger"
+                  href="/admin/deletecoupon/{{this._id}}"
+                  onclick="return confirm('Are you sure you want to delete {{this.Category_name}} coupon?');"
+                >Delete
+                </a></td>
+            </tr>
+          {{/each}}
+
+        </tbody> 
+      </table>
+      </section>
+
+    {{!-- </div>
+  </div>
+
+</section> --}}

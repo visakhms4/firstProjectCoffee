@@ -1,0 +1,300 @@
+body{
+  padding: 5px;
+  font-family: sans-serif;
+ 
+}
+.main_body{
+  height: 45rem;
+  width: 100%;
+  background-image: url(/public/images/bgnew.jpg);
+  background-repeat: no-repeat;
+
+  
+  display: flex;
+  align-items: center;
+  
+}
+.popular{
+  height: 35rem;
+  width: 100%;
+
+
+ 
+ 
+ 
+}
+
+.delivery{
+  height: 40rem;
+  width: 100%;
+
+}
+.delivery_header{
+  height: 5rem;
+  width: 100%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.delivery_card-container
+{
+  height: 24rem;
+  width: 100%;
+  
+}
+
+.aboutUs{
+  height: 28rem;
+  width: 100%;
+
+  display: flex;
+}
+.aboutus_img{
+  height: 100%;
+  width: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.abts_img_container
+{
+  height: 100%;
+  width: 60%;
+
+
+  display: flex;
+  justify-content: center;
+
+  
+}
+
+.abts-img-file{
+  height: 120%;
+  position: relative;
+  bottom: 100px;
+  left: 100px;
+  border-radius: 12px;
+}
+.aboutus_content{
+  height: 100%;
+  width: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.aboutus_content_wrapper{
+  height: 80%;
+  width: 70%;
+
+
+}
+.abtusbtn{
+  color: rgb(243, 196, 80);
+  border-radius:12px;
+  font-size: 22px;
+  background-color: chocolate;
+  border: none;
+  color: white;
+
+}
+
+
+.brands{
+  height: 25rem;
+  width: 100%;
+
+ 
+
+
+}
+.brands_header{
+height: 30%;
+width: 100%;
+
+display: flex;
+justify-content: space-around;
+align-items: center;
+
+}
+.brands_hr{
+  height: 5px;
+  width: 520px;
+  color: chocolate;
+  background-color: chocolate;
+}
+.bottom-hr{
+  height: 5px;
+  width: 96%;
+  color: chocolate;
+  background-color: chocolate;
+  margin-left: 2rem;
+}
+
+.brands_container{
+  height: 70%;
+  width: 100%;
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+}
+.brands_img{
+  height: 15rem;
+  width: 40rem;
+
+}
+.footer{
+  height: 16rem;
+  width: 100%;
+  display: flex;
+}
+.logo{
+width: 30rem;
+height: 14rem;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.footer_list{
+  width:100% ;
+  height: 14rem;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.list{
+  height: 10rem;
+  width: 100%;
+ display: 1;
+
+}
+.footer_head{
+  padding-bottom: 8%;
+  font-weight: 100;
+}
+/* copyright{
+
+} */
+.right_mb{
+  height: 25rem;
+  width: 50%;
+
+   display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  
+}
+.left_mb{
+  height: 25rem;
+  width: 50%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.left_mb_img{
+  height: 75%;
+  width: 50rem;
+  
+  object-fit: cover;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+ 
+
+}
+
+.img-main{
+
+height: 30rem;
+width: 46rem;
+border-radius:12px;
+}
+  
+
+.enjoy{
+  height: 15rem;
+  width: 75%;
+  
+}
+
+.ordrbtn{
+  background-color: chocolate;
+  height: 2rem;
+  width: 6rem;
+  border-radius:12px;
+  color: white;
+  border: none;
+}
+
+.btn_order {
+  border-radius:12px;
+  color: white;
+  border: none;
+  background-color: chocolate !important;
+}
+
+.popular_container{
+
+  height: 30rem;
+  width: 70%;
+  background-color:burlywood;
+  border: 2px solid azure;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+
+
+  
+
+  
+
+}
+.button-trend {
+text-decoration: none;
+color: white;
+}
+.popular-bg{
+  height: 10%;
+  width: 100%;
+  background-color:burlywood ;
+  opacity: .7;
+  align-items: center;
+  color: white;
+
+}
+.card-wraper{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  
+  
+  justify-content: center;
+}
+.card-img-top{
+  height: 66%;
+}
+.card-body
+{
+background-color: #6F4E37;
+
+}
+.card-text{
+  color: white;
+  font-size: large  ;
+  font-weight: 500;
+}
+.card-text1{
+  color: white;
+
+}

@@ -1,0 +1,13 @@
+.container{
+    margin-top: 5rem;
+}
+.user{
+    height: 30rem;
+    width: 50%;
+    background-color: aquamarine;
+}
+.address{
+    height: 30rem;
+    width: 50%;
+    background-color: rgb(71, 94, 47);
+}
