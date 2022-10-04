@@ -1,4 +1,6 @@
+const { reject } = require("bcrypt/promises");
 const { Types } = require("mongoose");
+const { resource } = require("../app");
 const cart_model = require("../model/cart_model");
 const category_model = require("../model/category_model");
 const product_model = require("../model/product_model");
@@ -23,6 +25,7 @@ module.exports = {
   getAllSnacksProducts: () => {
     return new Promise((resolve, reject) => {
       product_model.find({isDelete:"false",Category:"Snacks"}).then((Snacks) => {
+        console.log(Snacks);
         resolve(Snacks);
       });
     });
@@ -194,8 +197,10 @@ module.exports = {
             },
           ])
           .then((data) => {
-            console.log(data);
+            console.log("cart",data);
             let val = data[0] ? data[0].total : "0";
+          
+
             resolve(val);
           });
       } catch (error) {
@@ -239,4 +244,17 @@ module.exports = {
         });
     })
   },
+  getCartValue: (id)=>{
+    console.log("hhh",id);
+    return new Promise((resolve,reject) => {
+      cart_model.find({userId:Types.ObjectId(id)}).then((data)=> {
+        console.log(data);
+        let total = data[0].cartTotalAmount
+        console.log(total);
+        resolve(total)
+
+      })
+    })
+
+  }
 };

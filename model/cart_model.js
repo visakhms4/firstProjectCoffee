@@ -10,6 +10,9 @@ const cartSchema = new mongoose.Schema({
     type: Array,
     //required: true
   },
+  cartTotalAmount : {
+    type:Number,
+  }
 });
 
 module.exports = mongoose.model("cart_model", cartSchema,);

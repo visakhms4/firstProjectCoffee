@@ -36,10 +36,28 @@ module.exports = {
       })
 
     },
-    getEditCoupons: (id) => {
+    EditCoupons: (id) => {
       return new Promise((resolve, reject) => {
           coupon_model.find().then((coupons) => resolve(coupons))
       })
+  },
+  posteditCoupon:(id,body)=> {
+    return new Promise((resolve,reject)=>{
+      const {couponName,couponDescription,couponDiscount } =body;
+      coupon_model.updateOne({_id:Types.ObjectId(id)},
+      {
+        $set:{
+          coupon_code:couponName,
+          description:couponDescription,
+          discount:couponDiscount,
+
+
+        }
+      }
+      ).then(()=>{
+        resolve()
+      })
+    })
   },
     getTotalSales :()=> {
       return new Promise((resolve,reject)=>{

@@ -15,9 +15,12 @@ const { get_Allorders, get_order_details, get_order_table, getChangeOrderStatus,
 const { getAllUsers } = require('../helpers/user/users');
 const { get_individual_orders } = require('../helpers/admin/orders');
 const { get_order } = require('../helpers/admin/order_details');
-const { addCoupon, getAllCoupons, getTotalSales, getTotalUsers, getTotalSalesAmount, deleteCoupon, getEditCoupons } = require('../helpers/admin/coupon');
+const { addCoupon, getAllCoupons, getTotalSales, getTotalUsers, getTotalSalesAmount, deleteCoupon, getEditCoupons, postEditCoupon } = require('../helpers/admin/coupon');
 const { promise, reject } = require('bcrypt/promises');
 const { getTotalAmount } = require('../helpers/common');
+const { weeklyChart, monthlyChart, dailyChart } = require('../controllers/admin/dash');
+const { displayCoupon, getAddCoupon, getdeleteCoupon, getEditCoupon, postCoupon, postECoupon } = require('../controllers/admin/coupon');
+const { applyDiscount, clearDiscounts } = require('../helpers/admin/discount');
 var router = express.Router();
 
 //admin verification data
@@ -86,57 +89,57 @@ router.get("/orders",adminAuth, get_order_table);
 router.get("/order/details/:id",adminAuth,getOrderDetails)
 
 
-router.post("/order/changeStatus", getChangeOrderStatus)
-router.get("/order/cancel/:orderId/:productId", getCancelOrder)
+router.post("/order/changeStatus",adminAuth, getChangeOrderStatus)
+router.get("/order/cancel/:orderId/:productId",adminAuth, getCancelOrder)
 
 
-router.get("/stats/week",(req,res)=> {
-  getStatsWeek().then((graph) => {
-    res.status(200).json(graph)
+router.get("/stats/week",weeklyChart)
+
+router.get("/stats/month",monthlyChart)
+
+router.get("/stats/day",dailyChart)
+
+router.get("/coupon",adminAuth, displayCoupon)
+
+router.post("/coupon/add", getAddCoupon);
+router.get("/deletecoupon/:id",getdeleteCoupon);
+router.get("/editcoupon/:id",getEditCoupon)
+
+router.post("/editcoupon/:id",postECoupon)
+router.get("/discounts",(req,res) => {
+
+  return new Promise((resolve,reject) => {
+    product_model.find({isDelete:false}).then((data) => {
+      category_model.find({isDelete:false}).then((categoryData)=> {
+        console.log(categoryData);
+        const cd = categoryData[0].cdiscount;
+        console.log(cd);
+        res.render("admin/discounts",{admin:true,products:data,category:categoryData})
+      })
+      resolve(data)
+    })
   })
-})
 
-router.get("/stats/month",(req,res)=> {
-  getStatsMonth().then((graph) => {
-    res.status(200).json(graph)
-  })
-})
-
-router.get("/stats/day",(req,res)=> {
-  getStatDay().then((graph) => {
-    res.status(200).json(graph)
-  })
-})
-
-router.get("/coupon", (req, res) => {
-  getAllCoupons().then((coupon) => {
-    res.render("admin/view_coupons", {coupon: coupon})
-  })
-})
-
-router.post("/coupon/add", (req, res) => {
-  console.log("coupon add")
-  addCoupon(req.body).then(() => {
-    res.redirect("/admin/coupon")
+});
+router.post("/discounts/apply",(req,res) => {
+  
+  console.log(req.body);
+  applyDiscount(req.body).then((pdprice)=>{
+    console.log(pdprice);
+    res.status(200).json(pdprice);
   })
 });
-router.get("/deletecoupon/:id",(req,res)=> {
-  console.log("delete coupon");
-  console.log(req.params.id);
-
-  deleteCoupon(req.params.id).then((data)=>{
-    console.log(data);
-    res.redirect("/admin/coupon")
-  })
-});
-router.get("/editcoupon/:id",(req,res) => {
+router.post("/discounts/null",(req,res)=> {
   console.log("started");
-  getEditCoupons(req.params.id).then((data)=> {
+  console.log("her",req.body);
+  clearDiscounts(req.body).then((result) => {
+    console.log(result);
+    res.status(200).json(result);
 
-    res.render("admin/editcoupon",{coupon:data})
   })
 
-})
+});
+
 
 router.get('/logout',getLogout);
 

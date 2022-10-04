@@ -32,7 +32,7 @@ module.exports = {
         res.redirect("/admin/products")
       }
     });
-  },
+  }, 
 
   delete_product: function (req, res, next) {
     product_model.updateOne({ _id: Types.ObjectId(req.params.id) },{$set : {isDelete : true}}).then(() => {

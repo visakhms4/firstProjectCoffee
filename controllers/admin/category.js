@@ -10,7 +10,7 @@ module.exports = {
     });
   },
   post_add_category: function (req, res, next) {
-    console.log(req.body);
+    console.log(req.body); 
     addCategory(req.body).then((result) => {
       if (result) res.redirect("/admin/category",{admin:true});
       else res.send("some error occured");

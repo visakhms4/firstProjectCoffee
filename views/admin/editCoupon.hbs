@@ -3,27 +3,27 @@
   <div class="container1 mt-5">
     <div class="row mt-5 col-md-5">
       <h2>Edit Coupon</h2> 
-      {{#with coupon}}
-      <form action="/admin/Category/{{_id}}" method="post">
+      {{#with coupon.[0]}}
+      <form action="/admin/editcoupon/{{_id}}" method="post">
         <div class="form-group">
           <label for="Name">Coupon Name</label>
-          <input type="text" value="{{Category_name}}" name="Name" class="form-control" id="Name" />
+          <input type="text" value="{{coupon_code}}" name="couponName" class="form-control" id="Name" />
 
         </div>
         <div class="form-group">
           <label for="Description">Description</label>
           <input
             type="text"
-            name="description"
+            name="couponDescription"
             class="form-control"
             style="height:7rem ;"
             id="Description"
-            value="{{Category_description}}"
+            value="{{description}}"
           />
         </div>
          <div class="form-group">
           <label for="Name">Coupon Discount</label>
-          <input type="text" value="{{cdiscount}}" name="cdiscount" class="form-control" id="Name" />
+          <input type="text" value="{{discount}}" name="couponDiscount" class="form-control" id="Name" />
 
         </div>
 

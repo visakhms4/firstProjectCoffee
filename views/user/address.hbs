@@ -105,16 +105,46 @@
       </div>
       <div class="d-flex justify-content-between w-100">
         <p>Coupon Applied</p>
-        <p>₹0.00</p>
+        <p id="">₹0.00</p>
       </div>
       <hr />
       <div class="d-flex justify-content-between w-100">
         <p class="purple">TOTAL</p>
-        <p class="purple">₹{{total}}</p>
+        <p class="purple" id="Total">₹{{total}}</p>
       </div>
       <p>Estimated Delivery by <span class="fw-bold">01 Aug 2022</span></p>
-      <input type="text" name="coupon" class="form-control" placeholder="Coupon Code" />
+      <input type="text" name="coupon" class="form-control" id="coupon" placeholder="Coupon Code" />
+      <span class="text-danger" id="error"></span>
+            <button type="button" class="btn btn-success" onclick="applyCoupon('{{user.userId}}')">Apply coupon</button>
       <button class="btn bg_purple  w-100 mt-3">CONTINUE TO PAYMENT</button>
     </div>
   </div>
 </form>
+
+<script>
+function applyCoupon(userid) {
+  console.log("begin")
+  console.log(userid)
+  const couoponCode = document.getElementById("coupon").value
+  alert("couponCode",couoponCode)
+  $.ajax({
+    url:"/address/applyCoupon",
+
+    data:{ id:userid ,couponcode:couoponCode},
+    method:"POST",
+    success: function(total) {
+      console.log(total)
+      $("#Total").text(total)
+    
+    }, error : function(err) {
+
+    err = jQuery.parseJSON(err.responseText)
+    console.log(err)
+    $("#error").text(err)
+    }
+    
+    
+    
+  })
+}
+</script>

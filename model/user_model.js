@@ -1,3 +1,4 @@
+const { number, string } = require("joi")
 const mongoose = require("mongoose")
 const userSchema = new mongoose.Schema({
    user_id : Number,
@@ -10,6 +11,8 @@ const userSchema = new mongoose.Schema({
    User_Totalspend : Number,
    User_cart:Number,
    isDelete : Boolean,
+   User_Wallet:Number,
+   Referral_Code:String,
    
    
   

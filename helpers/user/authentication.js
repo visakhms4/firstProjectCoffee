@@ -1,6 +1,9 @@
 // const { db } = require("../../config/connection");
 const bcrypt = require("bcrypt");
 const user_model = require("../../model/user_model.js");
+// const rf = require('referral-code-generator')
+const ReferralCodeGenerator = require('referral-code-generator');
+const { number } = require("joi");
 
 module.exports = {
   doSignUp: (data) => {
@@ -15,9 +18,11 @@ module.exports = {
           response.error = "phone already registered";
           resolve(response);
         } else {
+
           bcrypt.hash(data.password, 10).then((result) => {
             password = result;
             delete data.confirmPassword;
+            
             user_model
               .create({
                 User_name: name, 
@@ -26,6 +31,9 @@ module.exports = {
                 User_Password: password,
                 isAllowed: true,
                 isDelete : false,
+                User_Wallet:0,
+                Referral_Code: ReferralCodeGenerator.alpha('uppercase',6),
+
               })
               .then((result) => {
                 console.log(result);
@@ -38,6 +46,20 @@ module.exports = {
       });
     });
   },
+validateReferralCode : (code)=>{
+  console.log(code);
+  return new Promise((resolve,reject) => {
+    user_model.updateOne({Referral_Code:code},
+      {
+        $inc: {
+          User_Wallet:10,
+        }
+      }).then(()=>{
+        resolve()
+      })
+  })
+},
+
   doSignIn: (data) => {
     return new Promise(async (resolve, reject) => {
       data.email = data.email.toLowerCase();

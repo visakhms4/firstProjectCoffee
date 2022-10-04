@@ -1,6 +1,7 @@
 const { reject } = require("bcrypt/promises");
 const { Types, default: mongoose } = require("mongoose");
 const user_model = require("../../model/user_model");
+const bcrypt = require("bcrypt");
 
 const Razorpay = require("razorpay");
 const { response } = require("express");
@@ -16,8 +17,6 @@ var instance = new Razorpay({
   key_id: "rzp_test_Ko2tJNGFw5ycqv",
   key_secret: "rnUQPlvG6t9JdKwW9loqzaw9",
 });
-
-
 
 module.exports = {
   getAllUsers: () => {
@@ -137,12 +136,10 @@ module.exports = {
     });
   },
   payPaypal: (req, res) => {
-    return new Promise((resolve, reject) => {
-     
-    })
+    return new Promise((resolve, reject) => {});
   },
   addAddress: (body, userId) => {
-    console.log("in add address",body)
+    console.log("in add address", body);
     return new Promise((resolve, reject) => {
       const {
         name,
@@ -153,7 +150,7 @@ module.exports = {
         state,
         houseName,
         landmark,
-        postOffice
+        postOffice,
       } = body;
       let addressObj = {
         userId: userId,
@@ -174,7 +171,7 @@ module.exports = {
   },
   getAddress: (userId) => {
     return new Promise((resolve, reject) => {
-      console.log(userId)
+      console.log(userId);
       address_model.find({ userId: Types.ObjectId(userId) }).then((address) => {
         resolve(address);
       });
@@ -189,6 +186,41 @@ module.exports = {
         });
     });
   },
+  updatePassword: (id, body) => {
+    let response = {};
+    const { currentpassword, newpassword } = body;
+    return new Promise((resolve, reject) => {
+      console.log(id);
+      user_model.findOne({ _id: Types.ObjectId(id) }).then((data) => {
+        console.log("userdata", data);
+        bcrypt
+          .compare(body.currentpassword, data.User_Password)
+          .then(async (status) => {
+            console.log(status);
+            if (status) {
+              const updatedPassword = await bcrypt.hash(newpassword, 10);
+
+              user_model
+                .updateOne(
+                  { _id: Types.ObjectId(id) },
+                  {
+                    $set: {
+                      User_Password: updatedPassword,
+                    },
+                  }
+                )
+                .then((data) => {
+                  console.log(data);
+                  resolve();
+                });
+            } else {
+              reject(createHttpError.Unauthorized("Password doesn't match"));
+            }
+          });
+      });
+    });
+  },
+
   addCheckoutAddress: (address) => {
     console.log("address is : ", address);
     const {
@@ -204,7 +236,6 @@ module.exports = {
       postOffice,
     } = address;
     let addressObj = {
-
       userId: userId,
       name: name,
       phone: phone,
@@ -223,61 +254,57 @@ module.exports = {
     });
   },
   getOrdersUserside: (userId) => {
-      return new Promise((resolve, reject) => {
-        if(!mongoose.Types.ObjectId.isValid(userId)){
-          reject(createHttpError.BadRequest())
-        }
-        console.log('userId');
-        order_models
-          .aggregate([
-            {
-              $match: {
-                userId: Types.ObjectId(userId),
+    return new Promise((resolve, reject) => {
+      if (!mongoose.Types.ObjectId.isValid(userId)) {
+        reject(createHttpError.BadRequest());
+      }
+      console.log("userId");
+      order_models
+        .aggregate([
+          {
+            $match: {
+              userId: Types.ObjectId(userId),
+            },
+          },
+          {
+            $lookup: {
+              from: "orderAddress",
+              localField: "deliveryDetails",
+              foreignField: "_id",
+              as: "address",
+            },
+          },
+          {
+            $lookup: {
+              from: "products",
+              localField: "products.productId",
+              foreignField: "_id",
+              as: "productDetails",
+            },
+          },
+          {
+            $set: {
+              date: {
+                $dateToString: { format: "%d/%m/%Y -- %H:%M", date: "$date" },
               },
             },
-            {
-              $lookup: {
-                from: 'orderAddress',
-                localField: "deliveryDetails",
-                foreignField: "_id",
-                as: "address",
-              },
-            },
-            {
-              $lookup: {
-                from: 'products',
-                localField: "products.productId",
-                foreignField: "_id",
-                as: "productDetails",
-              }, 
-            }, 
-            {
-              $set: {
-                date: {
-                  $dateToString: { format: "%d/%m/%Y -- %H:%M", date: "$date" },
-                },
-              },
-            },
-            // {
-            //   $set: {
-            //     productDetails : {$sortArray: { input: "$productDetails", sortBy: { _id: 1 } }}
-            //   }
-            // },
-            {
-              $sort: { date: -1 }
-            }
-          ])
-          .then((data) => {
-            data[0] ? 
-            resolve(data) : reject(createHttpError.NotFound())
-          });
-      }); 
-    
+          },
+          // {
+          //   $set: {
+          //     productDetails : {$sortArray: { input: "$productDetails", sortBy: { _id: 1 } }}
+          //   }
+          // },
+          {
+            $sort: { date: -1 },
+          },
+        ])
+        .then((data) => {
+          data[0] ? resolve(data) : reject(createHttpError.NotFound());
+        });
+    });
   },
 
-
-  getUserData: (id)=> {
+  getUserData: (id) => {
     console.log(id);
-
   },
-}
+};

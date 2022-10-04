@@ -8,6 +8,7 @@ const mongoose  = require('mongoose')
 const User = require("./model/product_model")
 const fileupload = require('express-fileupload')
 const Joi = require('joi')
+const referralCode = require('referral-code-generator')
 
 
 var userRouter = require('./routes/user');
@@ -15,6 +16,15 @@ var adminRouter = require('./routes/admin');
 const { hasSubscribers } = require('diagnostics_channel');
 const hbs = require('hbs')
 var app = express();
+var handlebars=require('express-handlebars')
+var hbshelper=handlebars.create({});
+hbshelper.handlebars.registerHelper('notEqual',function(string1,string2,options){
+if(string1!=string2){
+  return options.fn(this);
+} else {
+    return options.inverse(this);
+}
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +39,34 @@ hbs.registerHelper('index_of', function(context,ndx,prop) {
 
 hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+
+hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
+
+  switch (operator) {
+      case '==':
+          return (v1 == v2) ? options.fn(this) : options.inverse(this);
+      case '===':
+          return (v1 === v2) ? options.fn(this) : options.inverse(this);
+      case '!=':
+          return (v1 != v2) ? options.fn(this) : options.inverse(this);
+      case '!==':
+          return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+      case '<':
+          return (v1 < v2) ? options.fn(this) : options.inverse(this);
+      case '<=':
+          return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+      case '>':
+          return (v1 > v2) ? options.fn(this) : options.inverse(this);
+      case '>=':
+          return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+      case '&&':
+          return (v1 && v2) ? options.fn(this) : options.inverse(this);
+      case '||':
+          return (v1 || v2) ? options.fn(this) : options.inverse(this);
+      default:
+          return options.inverse(this);
+  }
 });
 
 

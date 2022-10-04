@@ -6,6 +6,7 @@ const {
   doSignUp,
   doSignIn,
   getUser,
+  validateReferralCode,
 } = require("../../helpers/user/authentication");
 const { schema } = require("../../helpers/user/joi");
 const Joi = require('joi')
@@ -119,6 +120,7 @@ module.exports = {
     }else {
       doSignUp(req.body).then((response) => {
         console.log(response);
+        validateReferralCode(req.body.referalCode);
         if (response.status) {
           res.status(200).redirect("/signin");
         } else {

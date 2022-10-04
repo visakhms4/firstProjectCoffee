@@ -13,7 +13,7 @@ const {
   post_otp_login,
 } = require("../controllers/users/authentication");
 const { getHome, getProductPage } = require("../controllers/users/main");
-const { get_profile, updateUser } = require("../controllers/users/profile");
+const { get_profile, updateUser, getAddressProfile, postAddress, getInvoice, getEditUser, postEditUSer, getChangePassword, postChangePassword, getprofileDetails, getProfileAddAddress, postProfileAddAddress } = require("../controllers/users/profile");
 const { getUserData, get_products, get_cart_page, get_add_to_cart, get_checkout, post_checkout, post_changequantity, post_remove_cart, getAddresPayment, get_snacks } = require("../controllers/users/user");
 const {
   addToCart,
@@ -23,14 +23,24 @@ const {
   changeCartQuantity,
   removeFromCart,
 } = require("../helpers/common");
-const { getCartProdutDetails, placeOrder, getOrders, getOrderDetails, cancelOrders, invoice_getOrderDetails, getPrintingDetails } = require("../helpers/user/orders");
-const { verifyPayment, changePaymentStatus, addAddress, getAddress, getOrdersUserside } = require("../helpers/user/users");
+const { getCartProdutDetails, placeOrder, getOrders, getOrderDetails, cancelOrders, invoice_getOrderDetails, getPrintingDetails, getInvoiceproductsorderDetails, getInvoiceproducts } = require("../helpers/user/orders");
+const { verifyPayment, changePaymentStatus, addAddress, getAddress, getOrdersUserside, updatePassword } = require("../helpers/user/users");
 const router = express.Router();
 const paypal = require("../controllers/users/paypal");
 const { getCancelOrder } = require("../controllers/admin/orders");
 const user_model = require("../model/user_model");
 const { createInvoice } = require("../controllers/users/invoice");
 const order_details = require("../helpers/admin/order_details");
+const user = require("../controllers/users/user");
+const { response } = require("../app");
+const { razorVerifyPayment } = require("../controllers/users/razorpay");
+const { getPaypalOrder } = require("../controllers/users/paypalRoutes");
+const coupon_model = require("../model/coupon_model");
+const { Promise } = require("mongoose");
+const { reject } = require("bcrypt/promises");
+const cart_model = require("../model/cart_model");
+const createHttpError = require("http-errors");
+const { updateCoupon } = require("../helpers/user/coupon");
 
 
 // const paypal = require("paypal-rest-sdk");
@@ -123,75 +133,31 @@ router.post("/cart/remove",userAuth,post_remove_cart );
 
 router.get("/address",userAuth, getAddresPayment);
 
-router.post("/address",userAuth, (req, res) => {
-  console.log(req.body)
-  res.cookie("address", req.body.address, { maxAge: 24*60*60*1000, httpOnly: true });
-  res.redirect("/checkout");
-});
-
-router.get("/order/:id",async (req,res) => {
-  let orderDetails = await getPrintingDetails(req.params.id)
-  console.log("order is :",orderDetails)
-  const { address,totalAmount } = orderDetails
-  console.log(address)
-  const addrs = `${address[0].houseName}, ${address[0].locality}`
-  const invoice = {
-    shipping: {
-      name: address[0].name,
-      address: addrs,
-      city: address[0].city,
-      state: address[0].city,
-      country: "INR",
-      postal_code: address[0].pincode
-    }, 
-    items: [
-      {
-        item: "TC 100",
-        description: "Toner Cartridge",
-        quantity: 2,
-        amount: 6000
-      },
-      {
-        item: "USB_EXT",
-        description: "USB Cable Extender",
-        quantity: 1,
-        amount: 2000
-      }
-    ],
-    subtotal: totalAmount,
-    paid: totalAmount,
-    invoice_nr: orderDetails._id
-  }
-  
-
-   
-
-    console.log("started");
-  
-    createInvoice(invoice, "invoice.pdf");
-    console.log("ended");
-    res.redirect("/");
- 
-
-})
-
-
-router.post("/verify-payment",userAuth, (req,res) => {
+router.post("/address/applyCoupon",(req,res)=>{
+  console.log("started");
   console.log(req.body);
-  console.log("hell");
-  verifyPayment(req.body).then(() => {
-    console.log("change");
-    changePaymentStatus(req.body['order[receipt]']).then(()=> {
-      console.log("payment successfull");
-      res.json({status:true})
-    }).catch((err) => {
-      console.log(err);
-      res.json({status:false})
-    })
+  var userId = req.body.id;
+  var code = req.body.couponcode;
 
+
+  updateCoupon(userId,code).then((total,count) => {
+    console.log("homewwww",count);
+    
+
+    res.status(200).json(total)
+
+  }).catch((err) => {
+    err.message
   })
-  
+
 })
+
+router.post("/address",userAuth,postAddress);
+
+router.get("/order/:id",getInvoice)
+
+
+router.post("/verify-payment",userAuth, razorVerifyPayment)
 //profile
 
 router.get("/profile",userAuth,get_profile);
@@ -238,19 +204,11 @@ router.get("/profile",userAuth,get_profile);
 
 // });
 
-router.get("/address/add",userAuth, (req,res) => {
-  res.render("user/add_address")
-})
+router.get("/address/add",userAuth,getProfileAddAddress)
 
 
 
-router.post("/address/add",userAuth, (req, res) => {
-  let user = req.session.user ? req.session.user : null;
-  console.log("in address router",user)
-  addAddress(req.body, user.userId).then((address) => {
-    console.log(address)
-    res.redirect("/address");
-  })});
+router.post("/address/add",userAuth,postProfileAddAddress );
 
 // router.get('/success',userAuth, (req, res) => {
 //   const payerId = req.query.PayerID;
@@ -289,7 +247,7 @@ router.post("/api/orders", async (req, res) => {
     let user = req.session.user ? req.session.user : null;
     let total = await getTotalAmount(user.userId);
     const order = await paypal.createOrder(total);
-    res.json(order);
+    res.json(order); 
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -304,55 +262,21 @@ router.post("/api/orders/:orderID/capture", async (req, res) => {
     res.status(500).send(err.message);
   }
 });
-router.get("/order/cancel/:orderId/:productId",(req,res)=>{
-  cancelOrders(req.params.orderId,req.params.productId).then(()=>{
-    res.redirect("/")
-  })
-})
+router.get("/order/cancel/:orderId/:productId",getPaypalOrder)
 
 
 
 
 //profile address
 
-router.get("/profileaddress",userAuth, (req, res) => {
-  let user = req.session.user ? req.session.user : null;
-  // console.log(user);
-  getTotalAmount(user.userId).then((total) => {
-    getAddress(user.userId).then((address) => {
-      console.log(address);
-      res.render("user/profileaddress", {
-        total: total,
-        address: address,
-        user: user,
-      });
-    });
-  });
-},);
+router.get("/profileaddress",userAuth,getprofileDetails);
+router.get("/changepassword",getChangePassword);
+router.post("/changepassword",postChangePassword)
 
 
-router.get("/edituser",(req,res) => {
-  console.log("hll",req.session.user.userId);
-  getUserData(req.session.user.userId).then((user) => {
-    console.log(user);
-    res.render("user/editprofile",{data:user})
-  })
+router.get("/edituser",getEditUser);
 
-
-});
-
-router.post("/edituser",(req,res) => {
-  console.log("lll",req.body);
-  console.log(req.session.user.userId);
-  const id = req.session.user.userId;
-updateUser(id,req.body).then((data)=> {
-  console.log(data);
-  res.redirect("/profile")
-})
-
-
-
-})
+router.post("/edituser",postEditUSer)
 
 
 

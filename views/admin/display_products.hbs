@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="container-fluid" style="overflow-x:auto;">
-      <table class="table border-bottom border-secondary" id="user-table">
+      <table class="table border-bottom border-secondary" id="myTable">
         <thead>
           <tr>
             <th class="" scope="col">#</th>
@@ -59,4 +59,10 @@
     </div>
   </div>
 </section>
-<link rel="stylesheet" href="/stylesheets/datatable.css" />
+
+
+<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>

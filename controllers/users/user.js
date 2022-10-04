@@ -8,6 +8,7 @@ const {
   addToCart,
   removeFromCart,
   getAllSnacksProducts,
+  getCartValue,
 } = require("../../helpers/common");
 const {
   addAddress,
@@ -27,6 +28,7 @@ const paypal = require("paypal-rest-sdk");
 const address_model = require("../../model/address_model");
 const coupon_model = require("../../model/coupon_model");
 const createHttpError = require("http-errors");
+const cart_model = require("../../model/cart_model");
 paypal.configure({
   mode: "sandbox",
   client_id:
@@ -88,7 +90,7 @@ module.exports = {
     });
   },
   get_checkout: (req, res) => {
-    getTotalAmount(req.session.user.userId).then((total) => {
+    getCartValue(req.session.user.userId).then((total) => {
       res.render("user/checkout", { total: total });
     });
   },
@@ -104,7 +106,7 @@ module.exports = {
       let orderAddress = await addCheckoutAddress(address);
       console.log(address);
       getCartProdutDetails(user.userId).then((products) => {
-        getTotalAmount(user.userId).then((total) => {
+        getCartValue(user.userId).then((total) => {
           const data = {
             userId: user.userId,
             addressId: orderAddress._id,
@@ -198,14 +200,26 @@ module.exports = {
     let user = req.session.user ? req.session.user : null;
     // console.log(user);
     getTotalAmount(user.userId).then((total) => {
-      getAddress(user.userId).then((address) => {
-        console.log(address);
-        res.render("user/address", {
-          total: total,
-          address: address,
-          user: user,
+      cart_model.updateOne({
+        userId:user.userId
+       
+      },
+      {
+        $set:{
+          cartTotalAmount:total
+        }
+      }).then(()=>{
+
+        getAddress(user.userId).then((address) => {
+          console.log(address);
+          console.log("usss",user);
+          res.render("user/address", {
+            total: total,
+            address: address,
+            user: user,
+          });
         });
-      });
+      })
     });
   },
 };

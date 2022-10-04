@@ -8,7 +8,9 @@
 			</div>
 		</div> --}}
         {{>admin_sidebar}}
-		<table class='table' style="margin-left: 8rem; max-width: -webkit-fill-available;">
+
+		<div class="" style="overflow-x:auto; margin-left:8rem">
+		<table class='table' style=" max-width: -webkit-fill-available; " id="myTable">
 			<thead>
 				<tr>
 					<th class='' scope='col'>#</th>
@@ -48,5 +50,15 @@
 
 			</tbody>
 		</table>
-		>
+		
+
+
+		</div>
+
+
+		<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
 		

@@ -8,6 +8,7 @@ const product_model = require("../../model/product_model");
 const order_address_model = require("../../model/order_address_model");
 const order_models = require("../../model/order_models");
 const moment = require("moment/moment");
+const products = require("../../controllers/admin/products");
 
 module.exports = {
 //   placeOrder: (order, products, total) => {
@@ -295,5 +296,17 @@ module.exports = {
       resolve(data[0])
     })
   })
- }
+ },
+//  getInvoiceproducts:(id)=> {
+//   return new Promise((resolve,reject) => {
+
+//     product_model.findOne({_id:Types.ObjectId(id)}).then((products)=> {
+//       console.log(products);
+//       resolve(products)
+//     })
+//   })
+    
+
+
+//  }
 };
