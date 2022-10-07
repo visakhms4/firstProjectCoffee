@@ -2,6 +2,7 @@ const { reject } = require("bcrypt/promises")
 const { Types } = require("mongoose")
 const coupon_model = require("../../model/coupon_model")
 const order_models = require("../../model/order_models")
+const usedCoupon = require("../../model/usedCoupon")
 const user_model = require("../../model/user_model")
 const users = require("../user/users")
 
@@ -18,9 +19,11 @@ module.exports = {
           coupon_model.create({
             coupon_code: coupon,
             description: description,
-            discount: discount
+            discount: discount,
+           
           }).then((data) => {
             console.log(data)
+            usedCoupon.create({coupon:body.coupon_code})
             resolve();
           })
         })
@@ -39,6 +42,8 @@ module.exports = {
     EditCoupons: (id) => {
       return new Promise((resolve, reject) => {
           coupon_model.find().then((coupons) => resolve(coupons))
+      }).catch((error) => {
+        reject(error)
       })
   },
   posteditCoupon:(id,body)=> {

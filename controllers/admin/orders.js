@@ -1,5 +1,6 @@
 const { get_Allorders, updateOrderStatus } = require("../../helpers/admin/orders");
 const { get_order } = require("../../helpers/admin/order_details");
+const { error } = require("../../helpers/user/joi");
 const order_models = require("../../model/order_models");
 const user_model = require("../../model/user_model");
 
@@ -44,6 +45,8 @@ console.log(`Time: ${dateObj.toISOString()}`);
     get_order(req.params.id).then((data) => {
     console.log(data[0]);
       res.render("admin/individual_orders",{admin : true, orderDetails: data[0]})
+    }).catch((error) => {
+      res.redirect("/error")
     })
     
     

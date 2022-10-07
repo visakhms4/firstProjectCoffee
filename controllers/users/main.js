@@ -1,13 +1,12 @@
-const { Cookie } = require("express-session");
-const { token } = require("morgan");
+
 const { getAllProducts, getProduct, getProductLimit } = require("../../helpers/common");
 
 module.exports = {
   getHome: (req, res) => {
     console.log(req.user);
-    getProductLimit(4).then((products) => {
-      var user = token
-      console.log("here",user)
+    getProductLimit(3).then((products) => {
+      let user = "data"
+      console.log(user)
       res.render("user/index", { title: "Coffe Time", products: products, user:user});
     });
   },

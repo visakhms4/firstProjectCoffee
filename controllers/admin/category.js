@@ -24,11 +24,14 @@ module.exports = {
       res.redirect("/admin/category")
     })
   },edit_category : function(req,res,next){
+    
     get_category(req.params.id).then((result) => {
       console.log(result)
         res.render("admin/edit_category",{admin:true,category : result})
   
       
+    }).catch((error) => {
+      res.redirect("/error")
     })
   },post_edit_category : function(req,res,next){
     console.log("edit started");

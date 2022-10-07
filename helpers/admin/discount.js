@@ -1,6 +1,7 @@
 const { reject, promise } = require("bcrypt/promises");
-const { Promise } = require("mongoose");
-const product_model = require("../../model/product_model")
+const { Promise, Types } = require("mongoose");
+const product_model = require("../../model/product_model");
+const user_model = require("../../model/user_model");
 
 module.exports = {
     applyDiscount : (body) => {

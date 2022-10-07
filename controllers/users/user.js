@@ -29,6 +29,8 @@ const address_model = require("../../model/address_model");
 const coupon_model = require("../../model/coupon_model");
 const createHttpError = require("http-errors");
 const cart_model = require("../../model/cart_model");
+const session = require("express-session");
+
 paypal.configure({
   mode: "sandbox",
   client_id:
@@ -49,8 +51,8 @@ module.exports = {
   get_products: function (req, res, next) {
     console.log(req.user);
     getAllProducts().then((products) => {
-      let user = req.token;
-      console.log(user);
+      let user = "token"
+      console.log("here",user);
       res.render("user/productsView", {
         title: "Coffe Time",
         products: products,
@@ -61,7 +63,7 @@ module.exports = {
   get_snacks: function (req, res, next) {
     console.log(req.user);
     getAllSnacksProducts().then((snacks) => {
-      let user = req.token;
+    let user ="user";
       console.log(user);
       res.render("user/snacks", {
         title: "Coffe Time",
@@ -74,9 +76,12 @@ module.exports = {
     const id = req.session.user.userId;
     console.log(id);
     getCart(id).then((data) => {
-      getTotalAmount(id).then((total) => {
+      getTotalAmount
+      (id).then((total) => {
+        let user = "user";
+        console.log("here",user);
         console.log(total);
-        res.render("user/cart", { data: data, total: total });
+        res.render("user/cart", { data: data, total: total ,userId:id, user:user});
       });
     });
   },
@@ -196,31 +201,37 @@ module.exports = {
       });
     });
   },
-  getAddresPayment: (req, res) => {
+  getAddresPayment: (req, res,next) => {
     let user = req.session.user ? req.session.user : null;
     // console.log(user);
     getTotalAmount(user.userId).then((total) => {
-      cart_model.updateOne({
-        userId:user.userId
-       
-      },
-      {
-        $set:{
-          cartTotalAmount:total
-        }
-      }).then(()=>{
+      if(total!=0){
 
-        getAddress(user.userId).then((address) => {
-          console.log(address);
-          console.log("usss",user);
-          res.render("user/address", {
-            total: total,
-            address: address,
-            user: user,
+        cart_model.updateOne({
+          userId:user.userId
+         
+        },
+        {
+          $set:{
+            cartTotalAmount:total
+          }
+        }).then(()=>{
+  
+          getAddress(user.userId).then((address) => {
+            console.log(address);
+            console.log("usss",user);
+            res.render("user/address", {
+              total: total,
+              address: address,
+              user: user,
+            })
           });
-        });
-      })
-    });
+        })
+      }else{
+        res.redirect("/erro")
+      }
+      
+    })
   },
 };
 function validateCoupon(coupon) {

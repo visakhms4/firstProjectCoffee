@@ -53,9 +53,9 @@
           </div>
         </div>
         <div class="d-flex col-12 col-sm-4 options" id="" style="width: 10rem">
-          <a href=" /Address/Edit" class="text-dark a-none">Edit</a>
-          <span class="mx-3">|</span>
-          <a href=" /Address/Remove" class="text-danger a-none"> Remove</a>
+          {{!-- <a href=" /Address/Edit" class="text-dark a-none">Edit</a> --}}
+          {{!-- <span class="mx-3">|</span> --}}
+          {{!-- <a href=" /Address/Remove" class="text-danger a-none"> Remove</a> --}}
         </div>
       </div>
       {{/each}}
@@ -97,7 +97,7 @@
       </div>
       <div class="d-flex justify-content-between w-100">
         <p>Discount</p>
-        <p>₹0.00</p>
+        <p >₹0.00</p>
       </div>
       <div class="d-flex justify-content-between w-100">
         <p>Shipping</p>
@@ -105,7 +105,7 @@
       </div>
       <div class="d-flex justify-content-between w-100">
         <p>Coupon Applied</p>
-        <p id="">₹0.00</p>
+        <p id="discount">₹0.00</p>
       </div>
       <hr />
       <div class="d-flex justify-content-between w-100">
@@ -113,9 +113,10 @@
         <p class="purple" id="Total">₹{{total}}</p>
       </div>
       <p>Estimated Delivery by <span class="fw-bold">01 Aug 2022</span></p>
-      <input type="text" name="coupon" class="form-control" id="coupon" placeholder="Coupon Code" />
-      <span class="text-danger" id="error"></span>
-            <button type="button" class="btn btn-success" onclick="applyCoupon('{{user.userId}}')">Apply coupon</button>
+      <input type="text" name="coupon" class="form-control" id="coupon" placeholder="Coupon Code / Wallet Redeem" />
+      
+            <button type="button" class="btn btn-success" style="margin-top: 1rem;" onclick="applyCoupon('{{user.userId}}')">Apply coupon</button>
+            <span style="padding-left:.5rem ;" class="text-danger" id="error"></span>
       <button class="btn bg_purple  w-100 mt-3">CONTINUE TO PAYMENT</button>
     </div>
   </div>
@@ -126,23 +127,30 @@ function applyCoupon(userid) {
   console.log("begin")
   console.log(userid)
   const couoponCode = document.getElementById("coupon").value
-  alert("couponCode",couoponCode)
+  
   $.ajax({
     url:"/address/applyCoupon",
 
     data:{ id:userid ,couponcode:couoponCode},
     method:"POST",
-    success: function(total) {
-      console.log(total)
-      $("#Total").text(total)
-    
-    }, error : function(err) {
+    success: function(response) {
+      if(response.total){
+      console.log(response.total)
+      $("#Total").text(response.total)
+       $("#discount").text(response.discount)
+        $("#error").text("")   
+   
+ 
 
-    err = jQuery.parseJSON(err.responseText)
-    console.log(err)
-    $("#error").text(err)
-    }
+      }else if(response.err){
+
+  
     
+    $("#error").text(response.err)
+
+      }
+    
+    }    
     
     
   })

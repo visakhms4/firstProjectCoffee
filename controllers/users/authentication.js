@@ -9,7 +9,10 @@ const {
   validateReferralCode,
 } = require("../../helpers/user/authentication");
 const { schema } = require("../../helpers/user/joi");
-const Joi = require('joi')
+const Joi = require('joi');
+const { token } = require("morgan");
+const user = require("./user");
+const session = require("express-session");
 
 let joiSchema = Joi.object({
   name: Joi.string().min(2).alphanum().required(),
@@ -88,12 +91,14 @@ module.exports = {
     doSignIn(req.body).then((response) => {
       if (response.status) {
         console.log(typeof response);
+      
         const token = jwt.sign(
           response.user.toJSON(),
           process.env.ACCESS_TOKEN_SECRET_KEY,
           { expiresIn: "7d" }
         );
-        res.cookie("token", token);
+        res.cookie("token",token);
+       
 
         res.redirect("/");
       } else {
@@ -185,7 +190,7 @@ module.exports = {
                 process.env.ACCESS_TOKEN_SECRET_KEY,
                 { expiresIn: "7d" }
               );
-              res.cookie("token", token);
+              res.cookie("token",token);
               res.redirect("/");
             } else {
               res.send({ message: "NO user with this phone number" });
@@ -198,6 +203,9 @@ module.exports = {
   },
   getLogout: (req, res) => {
     res.clearCookie("token");
+    console.log("hello");
+  
+    
     res.redirect("/");
   },
   post_otp_login :  function (req, res, next) {

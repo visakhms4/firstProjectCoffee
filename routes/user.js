@@ -40,23 +40,11 @@ const { Promise } = require("mongoose");
 const { reject } = require("bcrypt/promises");
 const cart_model = require("../model/cart_model");
 const createHttpError = require("http-errors");
-const { updateCoupon } = require("../helpers/user/coupon");
-
-
-// const paypal = require("paypal-rest-sdk");
-// const { get_order } = require("../helpers/admin/order_details");
-// paypal.configure({
-//   mode : 'sandbox',
-//   client_id : 'AX51G4C3QqcgfYGGlDrKSWnkMIuCNEGLKY8RKNkTsklFY741Qa7qiWSmJQHwORKx0FsGLjMHYCauO1Hc',
-//   client_secret : 'ELb1ewObat2QwdP8O7vNdDe_vlEI7lKRfoN-2WuxPg6AeEuf2eVOEoRfKSTQSXCe1H92UvYTP8g0i0TV' 
-// })
+const { updateCoupon, verifyWallet, resetWallet } = require("../helpers/user/coupon");
+const { token } = require("morgan");
 
 
 
-// router.use((req, res, next) => {
-//   res.setHeader("Cache-Control: no-cache, no-store, must-revalidate")
-//   next();
-// })
 router.use((req, res, next) => {
   res.set("Cache-Control", "no-store");
   next();
@@ -91,10 +79,11 @@ router.get("/userOrders/:id",userAuth,(req,res,next) => {
   console.log("begins");
   getOrdersUserside(req.params.id).then((data)=>{
     console.log(data);
-    res.render("user/userOrderList",{ orders:data})
+    let user = token;
+    res.render("user/userOrderList",{ orders:data, user:user})
   }).catch((err) => {
     console.log(err)
-    next(err)
+    res.redirect("/error")
   })
   
 
@@ -110,13 +99,21 @@ router.get("/userOrderList/details/:ids/:id",userAuth,(req,res) => {
 })
 // router.get("/product/:id", getProductPage)
 router.get("/logout", userAuth, getLogout);
+router.get("/legacy",(req,res) => {
+  res.render("user/legacy")
+})
 
 router.get("/products",userAuth,get_products );
 router.get("/products/snacks",userAuth,get_snacks)
 
+router.get("/Offers",(req,res) => {
+  let user = token
+  res.render("user/offers",{user:user})
+})
+
 router.get("/cart",userAuth,get_cart_page);
 
-router.get("/add-to-cart/:id",userAuth, get_add_to_cart );
+router.get("/add-to-cart/:id",userAuth, get_add_to_cart ); 
 
 router.get("/checkout",userAuth,get_checkout);
 
@@ -126,10 +123,6 @@ router.post('/checkout',userAuth,post_checkout)
 router.post("/cart/changeQuantity",userAuth,post_changequantity);
 router.post("/cart/remove",userAuth,post_remove_cart );
 
-// router.get("/address",(req,res) => {
-//   res.render("user/address")
-
-// })
 
 router.get("/address",userAuth, getAddresPayment);
 
@@ -140,13 +133,21 @@ router.post("/address/applyCoupon",(req,res)=>{
   var code = req.body.couponcode;
 
 
-  updateCoupon(userId,code).then((total,count) => {
-    console.log("homewwww",count);
+  updateCoupon(userId,code).then((response) => {
+
+
+    //resetWallet(userId);
+
+
     
 
-    res.status(200).json(total)
+    res.status(200).json(response)
 
   }).catch((err) => {
+   const response = {}
+   console.log("jgjhg",err);
+    response.err=err;
+    res.json(response)
     err.message
   })
 
@@ -162,47 +163,7 @@ router.post("/verify-payment",userAuth, razorVerifyPayment)
 
 router.get("/profile",userAuth,get_profile);
 
-// router.post('/pay', (req, res) => {
-//   const create_payment_json = {
-//     "intent": "sale",
-//     "payer": {
-//         "payment_method": "paypal"
-//     },
-//     "redirect_urls": {
-//         "return_url": "http://localhost:3000/success",
-//         "cancel_url": "http://localhost:3000/cancel"
-//     },
-//     "transactions": [{
-//         "item_list": {
-//             "items": [{
-//                 "name": "Red Sox Hat",
-//                 "sku": "001",
-//                 "price": "25.00",
-//                 "currency": "USD",
-//                 "quantity": 1
-//             }]
-//         },
-//         "amount": {
-//             "currency": "USD",
-//             "total": "25.00"
-//         },
-//         "description": "Hat for the best team ever"
-//     }]
-// };
 
-// paypal.payment.create(create_payment_json, function (error, payment) {
-//   if (error) {
-//       throw error;
-//   } else {
-//       for(let i = 0;i < payment.links.length;i++){
-//         if(payment.links[i].rel === 'approval_url'){
-//           res.redirect(payment.links[i].href);
-//         }
-//       }
-//   }
-// });
-
-// });
 
 router.get("/address/add",userAuth,getProfileAddAddress)
 
@@ -210,30 +171,6 @@ router.get("/address/add",userAuth,getProfileAddAddress)
 
 router.post("/address/add",userAuth,postProfileAddAddress );
 
-// router.get('/success',userAuth, (req, res) => {
-//   const payerId = req.query.PayerID;
-//   const paymentId = req.query.paymentId;
-
-//   const execute_payment_json = {
-//     "payer_id": payerId,
-//     "transactions": [{
-//         "amount": {
-//             "currency": "USD",
-//             "total": "25.00"
-//         }
-//     }]
-//   };
-
-//   paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
-//     if (error) {
-//         console.log(error.response);
-//         throw error;
-//     } else {
-//         console.log(JSON.stringify(payment));
-//         res.send('Success');
-//     }
-// });
-// });
 
 
 router.get('/cancel',userAuth, (req, res) => res.send('Cancelled'));

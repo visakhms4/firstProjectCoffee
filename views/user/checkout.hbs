@@ -135,22 +135,15 @@
         <p class="text-purple">₹{{total}}</p>
       </div>
       <p>Estimated Delivery by <span class="fw-bold">01 Aug 2022</span></p>
-      <input
-        type="text"
-        style="text-transform: uppercase;"
-        name="coupon"
-        class="form-control"
-        id="coupon"
-        placeholder="Coupon Code"
-      />
+ 
       <div class="w-100 d-flex justify-content-center">
         <span class="text-center mt-2" id="coupon_msg"></span>
       </div>
-      <button class="btn bg_purple text-white w-100 mt-3" id="checkout">PLACE
+      <button class="btn bg_purple  w-100 mt-3" id="checkout">PLACE
         ORDER</button>
     </div>
   </div>
-</form>
+</form> 
 
 
 
@@ -250,7 +243,7 @@ function verifyPayment(payment,order){
     method:'post',
     success:(response) => {
       if(response.status){
-        alert(response)
+       
            Swal.fire(
   'Order Placed!',
   'Thanks for Purchaising',

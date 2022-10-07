@@ -1,18 +1,36 @@
 const { reject } = require("bcrypt/promises");
-const { Types } = require("mongoose");
+const createHttpError = require("http-errors");
+const { Types, default: mongoose } = require("mongoose");
 const { resource } = require("../app");
 const cart_model = require("../model/cart_model");
 const category_model = require("../model/category_model");
+const coupon_model = require("../model/coupon_model");
 const product_model = require("../model/product_model");
+const usedCoupon = require("../model/usedCoupon");
+const user_model = require("../model/user_model");
+const { error } = require("./user/joi");
 
 module.exports = {
   getProduct: (productId) => {
     return new Promise((resolve, reject) => {
-      product_model
-        .findOne({ _id: Types.ObjectId(productId) })
-        .then((product) => {
-          resolve(product);
-        });
+ try{
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    reject(createHttpError.BadRequest());
+  }
+
+     product_model 
+       .findOne({ _id: Types.ObjectId(productId) })
+       .then((product) => {
+       
+
+           resolve(product);
+        
+       })
+      } catch (error) {
+        reject(error)
+
+      }
+  
     });
   },
   getAllProducts: () => {
@@ -89,7 +107,7 @@ module.exports = {
                         $push: {
                           cartItems: productObj,
                         },
-                      },
+                      }, 
                       {
                         upsert: true,
                       }
@@ -200,8 +218,10 @@ module.exports = {
             console.log("cart",data);
             let val = data[0] ? data[0].total : "0";
           
+              
 
-            resolve(val);
+                resolve(val);
+              
           });
       } catch (error) {
         console.error(error);
@@ -256,5 +276,47 @@ module.exports = {
       })
     })
 
-  }
+  },resetWallet: (id) => {
+    user_model
+      .updateOne(
+        {
+          _id: Types.ObjectId(id),
+        },
+        {
+          User_Wallet: 0,
+        }
+      )
+      .then((data) => {
+        console.log(data);
+      });
+  },
+  updateUser:(id,body)=> {
+
+    console.log("hellow");
+    const { Username,Email,number } = body;
+    console.log("here",body);
+    return new Promise((resolve,reject) => {
+      user_model.updateOne(
+        {
+          _id :id 
+        },
+        {
+          $set: {
+            User_name : Username,
+            User_email : Email,
+            User_PhoneNumber : number,
+          },
+        }
+      ).then((result) => {
+        resolve(result)
+      })
+    })
+  },
+  couponRepeat:(id,code) => {
+  console.log("strr");
+  coupon_model.updateOne({coupon_code:code},{$push:{users:Types.ObjectId(id)}},{upsert:true}).then((status) => {
+    console.log(status);
+  })
+
+  },
 };

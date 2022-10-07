@@ -1,4 +1,5 @@
 const { getAllCoupons, getEditCoupons, EditCoupons, deleteCoupon, addCoupon, postEditCoupon, posteditCoupon } = require("../../helpers/admin/coupon")
+const { error } = require("../../helpers/user/joi")
 
 module.exports = {
     displayCoupon : (req, res) => {
@@ -9,6 +10,7 @@ module.exports = {
       getAddCoupon : (req, res) => {
         console.log("coupon add")
         addCoupon(req.body).then(() => {
+          
           res.redirect("/admin/coupon")
         })
       },
@@ -23,11 +25,16 @@ module.exports = {
       },
       getEditCoupon : (req,res) => {
         console.log("started");
-        EditCoupons(req.params.id).then((data)=> {
-          console.log(data);
-      
-          res.render("admin/editcoupon",{coupon:data,admin:true})
-        })
+        try {
+          EditCoupons(req.params.id).then((data)=> {
+            console.log(data);
+        
+            res.render("admin/editcoupon",{coupon:data,admin:true})
+          })
+
+        } catch(error){
+          res.redirect("/error")
+        }
       
       }, 
       postECoupon : (req,res) => {

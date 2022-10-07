@@ -9,6 +9,7 @@ module.exports = {
     console.log("in add category");
     console.log(body);
     return new Promise((resolve, reject) => {
+      
       const { Name, description,cdiscount } = body;
       category_model
         .create({
@@ -28,16 +29,21 @@ module.exports = {
   },
   get_category: (id) => {
     return new Promise((resolve, reject) => {
-      console.log(id);
-      category_model
-        .findOne({ _id: Types.ObjectId(id) })
-        .then((showcategory) => {
-          console.log(showcategory);
-          resolve(showcategory);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      try {
+
+        console.log(id);
+        category_model
+          .findOne({ _id: Types.ObjectId(id) })
+          .then((showcategory) => {
+            console.log(showcategory);
+            resolve(showcategory);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch(error) {
+        reject(error)
+      }
     });
   },
   update_category : (id,body) => {

@@ -1,4 +1,5 @@
-const { getTotalAmount } = require("../../helpers/common");
+const { token } = require("morgan");
+const { getTotalAmount, updateUser } = require("../../helpers/common");
 const { getPrintingDetails } = require("../../helpers/user/orders");
 const { updatePassword, getAddress, addAddress } = require("../../helpers/user/users");
 const user_model = require("../../model/user_model");
@@ -10,7 +11,7 @@ module.exports = {
         console.log(req.session.user.userId);
         const id = req.session.user.userId;
         getUserData(id).then((data) => {
-          let user = req.token;
+          let user = token;
           console.log("data is",data);
           res.render("user/user_profile",{data : data,user : user})
         })
@@ -18,27 +19,7 @@ module.exports = {
       
        // res.render("user/user_profile",{}) 
       },
-      updateUser:(id,body)=> {
-
-        const { Username,Email,number } = body;
-        console.log(body);
-        return new Promise((resolve,reject) => {
-          user_model.updateOne(
-            {
-              _id :id 
-            },
-            {
-              $set: {
-                User_name : Username,
-                User_email : Email,
-                User_PhoneNumber : number,
-              },
-            }
-          ).then((result) => {
-            resolve(result)
-          })
-        })
-      },
+     
       postAddress : (req, res) => {
         console.log(req.body)
         res.cookie("address", req.body.address, { maxAge: 24*60*60*1000, httpOnly: true });
@@ -103,7 +84,7 @@ module.exports = {
       
       },
       postEditUSer: (req,res) => {
-        console.log("lll",req.body);
+        console.log("lrstdfhjgkhk",req.body);
         console.log(req.session.user.userId);
         const id = req.session.user.userId;
       updateUser(id,req.body).then((data)=> {
@@ -115,7 +96,8 @@ module.exports = {
       
       },
       getChangePassword : (req,res)=>{
-        res.render("user/changepassword")
+        let user = token;
+        res.render("user/changepassword",{ user:user})
       },
       postChangePassword : (req,res) => {
         console.log(req.session.user.userId);
@@ -131,15 +113,18 @@ module.exports = {
       
       },
       getprofileDetails : (req, res) => {
-        let user = req.session.user ? req.session.user : null;
-        // console.log(user);
-        getTotalAmount(user.userId).then((total) => {
-          getAddress(user.userId).then((address) => {
+        let User = req.session.user ? req.session.user : null;
+         console.log(User);
+        getTotalAmount(User.userId).then((total) => {
+          getAddress(User.userId).then((address) => {
             console.log(address);
+            let user = token
+            
             res.render("user/profileaddress", {
               total: total,
               address: address,
-              user: user,
+              User: User,
+              user:user,
             });
           });
         });
@@ -153,5 +138,6 @@ module.exports = {
         addAddress(req.body, user.userId).then((address) => {
           console.log(address)
           res.redirect("/address");
-        })}
+        })},
+     
 }

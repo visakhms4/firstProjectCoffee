@@ -1,4 +1,5 @@
-const { Types } = require("mongoose");
+const createHttpError = require("http-errors");
+const { Types, default: mongoose } = require("mongoose");
 const { addProduct, updateProduct } = require("../../helpers/admin/product");
 const { getProduct } = require("../../helpers/common");
 const category_model = require("../../model/category_model");
@@ -34,20 +35,30 @@ module.exports = {
     });
   }, 
 
-  delete_product: function (req, res, next) {
+  delete_product: function (req, res, next) { 
+   
+
     product_model.updateOne({ _id: Types.ObjectId(req.params.id) },{$set : {isDelete : true}}).then(() => {
       res.redirect("/admin/products");
     });
   },
   
   getEditProduct: (req, res) => {
+    try {
     getProduct(req.params.id).then((result) => {
+      
+      
       if (result) {
         res.render("admin/edit_product", { admin: true, product: result });
       } else {
-        res.send("Unable to find a product");
+        res.send("Unable to find a product"); 
       }
-    });
+      
+    }).catch((err)=>{res.redirect('/error')});
+  } catch(error) {
+    res.redirect("/error")
+
+  }
   },
   postEditProduct: (req, res) => {
     let {price, pdiscount} = req.body

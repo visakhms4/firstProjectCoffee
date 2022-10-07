@@ -16,7 +16,8 @@ var adminRouter = require('./routes/admin');
 const { hasSubscribers } = require('diagnostics_channel');
 const hbs = require('hbs')
 var app = express();
-var handlebars=require('express-handlebars')
+var handlebars=require('express-handlebars');
+const { token } = require('morgan');
 var hbshelper=handlebars.create({});
 hbshelper.handlebars.registerHelper('notEqual',function(string1,string2,options){
 if(string1!=string2){
@@ -108,7 +109,9 @@ app.use('/admin', adminRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
+app.get('/error',(req,res)=>{
+   res.render('errorpage')
+})
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -122,8 +125,10 @@ app.use(function(err, req, res, next) {
     res.send("bad request")
   }
   if(err.status === 404) {
+    
     res.render('errorpage');
   }
 });
 
 module.exports = app;
+ 
