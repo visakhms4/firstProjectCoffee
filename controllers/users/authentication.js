@@ -86,7 +86,7 @@ module.exports = {
         noHeader: true,
         Err: Err
       });
-      res.session.signupErr = "";
+      res.session.signupErr = "error";
     
     
   },
