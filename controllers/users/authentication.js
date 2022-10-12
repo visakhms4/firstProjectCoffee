@@ -79,14 +79,15 @@ module.exports = {
     let Err = "";
     if(req.session.signupErr){
       Err = req.session.signupErr
-    }else{
+    }
+
       res.render("user/signUp", {
         title: "User Signup",
         noHeader: true,
         Err: Err
       });
-      // res.session.signupErr = null;
-    }
+      res.session.signupErr = "";
+    
     
   },
   postSignIn: (req, res) => {
