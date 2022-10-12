@@ -96,7 +96,8 @@ module.exports = {
   },
   get_checkout: (req, res) => {
     getCartValue(req.session.user.userId).then((total) => {
-      res.render("user/checkout", { total: total });
+      let user = "user";
+      res.render("user/checkout", { total: total,user:user});
     });
   },
   post_checkout: async (req, res, next) => {
