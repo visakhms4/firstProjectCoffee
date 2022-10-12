@@ -55,7 +55,7 @@ module.exports = {
     }
   },
   stopAuthenticate: (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies?.token;
     if (token) {
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY, (err, user) => {
         if (err) {
@@ -75,9 +75,10 @@ module.exports = {
       noHeader: true,
     });
   },
+  
   getSignUp: (req, res) => {
     let Err = "";
-    if(req.session.signupErr){
+    if(req.session?.signupErr){
       Err = req.session.signupErr
     }
 
@@ -86,7 +87,7 @@ module.exports = {
         noHeader: true,
         Err: Err
       });
-      res.session.signupErr = "error";
+      // res.session.signupErr = null;
     
     
   },
