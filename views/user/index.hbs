@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="/public/stylesheets/homepage.css" />
 
-<section class="main_body">
-  <div class="right_mb">
+<section class="main_body container-lg ">
+  <div class="row">
+  <div class="right_mb col-xl-6">
     <div class="enjoy">
       
       <h1 style="font-size:53px ;">Enjoy your coffee before your activity</h1>
@@ -12,25 +13,28 @@
     </div>
   </div>
 
-  <div class="left_mb">
+  <div class="left_mb col-xl-6">
     
     <div class="left_mb_img">
     
-      <img class="img-main" src="/images/cofee-home.webp" alt="" />
+      <img class="img-main img-fluid" src="/images/cofee-home.webp" alt="" />
 
     </div>
 
   </div>
+  </div>
 </section>
+<br>
+<br>
 
-<section class="popular">
-  <div class="popular-bg d-flex justify-content-center">
+<section class="popular container-fluid">
+  <div class="popular-bg d-flex justify-content-center row mt-5">
     <h2 class="ph2">TRENDING NOW </h2>
   </div>
-  <div class="card-wraper pt-3">
-<div class="popular_container">
+  <div class="card-wraper pt-3 row row-cols-1 row-cols-md-2 g-4 ">
+<div class="popular_container col" >
     {{#each products}}
-     <div class="col-md-3">
+     <div class="">
 
           <div class="card m-3" style="width: 18rem; height:25rem;  ">
             <img
@@ -83,9 +87,9 @@
   <div class="delivery_header">
     <h2>How to use delivery service</h2>
   </div>
-  <div class="delivery_card-container d-flex justify-content-evenly">
+  <div class="delivery_card-container row row-cols-1 row-cols-md-3 d-flex justify-content-evenly">
 
-    <div class="card" style="width: 18rem;">
+    <div class="card col " style="width: 18rem;">
       <img src="/images/del4.jfif" class="card-img-top" alt="..." />
       <div class="card-body">
         <p class="card-text">Choose your coffee.</p>
@@ -93,7 +97,7 @@
       </div>
     </div>
 
-    <div class="card" style="width: 18rem;">
+    <div class="card col" style="width: 18rem;">
       <img src="/images/del-5.png" class="card-img-top" alt="..." />
       <div class="card-body">
         <p class="card-text">We deliver it to you</p>
@@ -101,7 +105,7 @@
       </div>
     </div>
 
-    <div class="card" style="width: 18rem;">
+    <div class="card col" style="width: 18rem;">
       <img src="/images/del6.jfif" class="card-img-top" alt="..." />
       <div class="card-body">
         <p class="card-text">Enjoy your coffee.</p>
@@ -112,14 +116,15 @@
   </div>
 </section>
 
-<section class="aboutUs">
-  <div class="aboutus_img">
+<section class="aboutUs container-lg">
+  <div class="row">
+  <div class="aboutus_img col-xl-6">
     <div class="abts_img_container">
-      <img class="abts-img-file" src="/images/aboutus.jpg" alt="" />
+      <img class="abts-img-file img-fluid" src="/images/aboutus.jpg" alt="" />
 
     </div>
   </div>
-  <div class="aboutus_content">
+  <div class="aboutus_content col">
     <div class="aboutus_content_wrapper">
       <h1>About Us</h1>
       <p>We provide quality coffee, and ready to deliver</p>
@@ -128,13 +133,13 @@
         product is made with a scecret recipe and available in stores world
         wide.</p>
 <a href="/products"> <button class="abtusbtn">Get your coffee</button></a>
-      
-
     </div>
   </div>
+  </div>
+
 
 </section>
-<section class="brands">
+<section class="brands ">
   <div class="brands_header">
     <hr class="brands_hr" />
     <h3>Brands We Work With</h3>
@@ -142,7 +147,7 @@
   </div>
   <div class="brands_container">
     <img
-      class="brands_img"
+      class="brands_img img-fluid"
       src="http://www.nationalcoffee.net/wp-content/uploads/2017/11/coffee-logos.png"
       alt=""
     />
@@ -191,3 +196,70 @@
 
 </section>
  --}}
+
+
+ <div class="container-fluid">
+<div class="row">
+<div class="col-lg-6 col-md-6 col-sm-12">
+<div class="single-product mb-50">
+<div class="text-center">
+<img style="width: 50%; " class="rounded"   src="/product_images/aboutus.jpg">
+</div>
+</div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12">
+<div class="mb-50">
+<div class="align-self-center ">
+<h1>About Us</h1>
+<p>We provide Quality coffee,and ready to deliver</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+{{!-- // --}}
+
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-6 col-md-6 col-sm-12">
+<div class="mb-50">
+<div class="text-center ">
+<h1>Enjoy your coffee before your activity</h1>
+<p>Boot your productivity and build your mood with a glass of coffee in the morning</p>
+<button>Order Now</button>
+</div>
+</div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12">
+<div class="mb-50">
+<div class="text-center">
+<img style="width: 80%; " class="rounded"   src="/images/cofee-home.webp">
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row">
+{{#each products}}
+<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+
+<div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;">
+<div class="popular-img">
+
+<div class="favorit-items">
+
+<img src="{{this._id}}">
+</div>
+</div>
+<div class="popular-caption">
+  <h3>{{this.product_name}}</h3>
+<h3>{{this.description}}</h3>
+<span>{{this.price}}</span>
+<button>Add to Cart</button>
+</div>
+</div>
+</div>
+{{/each}}
+</div>
+

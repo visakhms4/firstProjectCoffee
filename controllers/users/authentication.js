@@ -79,18 +79,21 @@ module.exports = {
     let Err = "";
     if(req.session.signupErr){
       Err = req.session.signupErr
+    }else{
+      res.render("user/signUp", {
+        title: "User Signup",
+        noHeader: true,
+        Err: Err
+      });
+      res.session.signupErr = null;
     }
-    res.render("user/signUp", {
-      title: "User Signup",
-      noHeader: true,
-      Err: Err
-    });
-    res.session.signupErr = null;
+    
   },
   postSignIn: (req, res) => {
     doSignIn(req.body).then((response) => {
       if (response.status) {
         console.log(typeof response);
+        
       
         const token = jwt.sign(
           response.user.toJSON(),

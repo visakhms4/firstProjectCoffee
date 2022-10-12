@@ -8,6 +8,7 @@ $(document).ready(function () {
         data: $("#signin").serialize(),
         method: "POST",
         success: function (response) {
+          
           window.location.reload();
         },
         error: function (err) {

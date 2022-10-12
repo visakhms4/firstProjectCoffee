@@ -9,6 +9,7 @@ const User = require("./model/product_model")
 const fileupload = require('express-fileupload')
 const Joi = require('joi')
 const referralCode = require('referral-code-generator')
+require('dotenv').config()
 
 
 var userRouter = require('./routes/user');
@@ -71,7 +72,7 @@ hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
 });
 
 
-mongoose.connect( "mongodb://localhost:27017/coffee").then((success) => {
+mongoose.connect( process.env.MONGODB_CONNECT).then((success) => {
   console.log('success')
 }).catch((err) => {
   console.log(err)

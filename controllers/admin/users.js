@@ -6,7 +6,7 @@ module.exports = {
   },
   get_users : function (req,res) {
     getAllUsers().then((users) =>{
-      res.render("admin/view_users",{users : users})
+      res.render("admin/view_users",{users : users,admin:true})
     })
   },
   add_user: function (req, res, next) {

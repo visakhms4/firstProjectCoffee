@@ -74,7 +74,7 @@ module.exports = {
   },
   get_cart_page: function (req, res, next) {
     const id = req.session.user.userId;
-    console.log(id);
+    
     getCart(id).then((data) => {
       getTotalAmount
       (id).then((total) => {

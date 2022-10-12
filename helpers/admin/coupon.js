@@ -13,6 +13,8 @@ module.exports = {
         })
     },
     addCoupon: (body) => {
+  
+
         return new Promise((resolve, reject) => {
             console.log(body)
         const {coupon, description, discount} = body
@@ -20,13 +22,16 @@ module.exports = {
             coupon_code: coupon,
             description: description,
             discount: discount,
+            
            
           }).then((data) => {
-            console.log(data)
-            usedCoupon.create({coupon:body.coupon_code})
+            console.log(data) 
+           
             resolve();
           })
         })
+
+      
     },
     deleteCoupon: (id)=> {
       console.log(id);
@@ -41,28 +46,35 @@ module.exports = {
     },
     EditCoupons: (id) => {
       return new Promise((resolve, reject) => {
-          coupon_model.find().then((coupons) => resolve(coupons))
+          coupon_model.find({_id:Types.ObjectId(id)}).then((coupons) => resolve(coupons))
       }).catch((error) => {
         reject(error)
       })
   },
   posteditCoupon:(id,body)=> {
-    return new Promise((resolve,reject)=>{
-      const {couponName,couponDescription,couponDiscount } =body;
-      coupon_model.updateOne({_id:Types.ObjectId(id)},
-      {
-        $set:{
-          coupon_code:couponName,
-          description:couponDescription,
-          discount:couponDiscount,
+    try{
+      
+            return new Promise((resolve,reject)=>{
+              const {couponName,couponDescription,couponDiscount } =body;
+              coupon_model.updateOne({_id:Types.ObjectId(id)},
+              {
+                $set:{
+                  coupon_code:couponName,
+                  description:couponDescription,
+                  discount:couponDiscount,
+        
+        
+                }
+              }
+              ).then(()=>{
+                resolve()
+              })
+            })
 
-
-        }
-      }
-      ).then(()=>{
-        resolve()
-      })
-    })
+    } catch {
+      reject() 
+    }
+    
   },
     getTotalSales :()=> {
       return new Promise((resolve,reject)=>{

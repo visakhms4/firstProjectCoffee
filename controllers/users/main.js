@@ -4,7 +4,7 @@ const { getAllProducts, getProduct, getProductLimit } = require("../../helpers/c
 module.exports = {
   getHome: (req, res) => {
     console.log(req.user);
-    getProductLimit(3).then((products) => {
+    getProductLimit(4).then((products) => {
       let user = "data"
       console.log(user)
       res.render("user/index", { title: "Coffe Time", products: products, user:user});

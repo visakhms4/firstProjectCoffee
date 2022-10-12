@@ -23,6 +23,9 @@ module.exports = {
               $unwind: "$order",
             },
             {
+              $sort:{date:-1}
+            },
+            {
               $set: {
                 date: {
                   $dateToString: { format: "%d/%m/%Y -- %H:%M", date: "$date", timezone: "+05:30" },
