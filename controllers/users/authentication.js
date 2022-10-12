@@ -87,7 +87,7 @@ module.exports = {
         noHeader: true,
         Err: Err
       });
-      // res.session.signupErr = null;
+      req.session.signupErr = null;
     
     
   },
