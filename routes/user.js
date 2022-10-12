@@ -61,8 +61,8 @@ const client = require("twilio")(accountSid, authToken);
 /* GET home page. */
 router.get("/signin", stopAuthenticate, getSignIn);
 router.post("/signin", stopAuthenticate, postSignIn);
-router.get("/signup", stopAuthenticate, getSignUp);
-router.post("/signup", stopAuthenticate, postSignUp);
+router.get("/signup", getSignUp);
+router.post("/signup", postSignUp);
 router.post("/otpLogin",stopAuthenticate, post_otp_login);
 router.get("/otpLogin", function (req, res, next) {
   res.render("user/otp");
