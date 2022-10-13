@@ -79,17 +79,17 @@ module.exports = {
   getSignUp: (req, res) => {
     console.log("entered");
     
-    let Err = "";
-    if(req.session?.signupErr){
-      Err = req.session.signupErr
-    }
+    // let Err = "";
+    // if(req.session?.signupErr){
+    //   Err = req.session.signupErr
+    // }
 
       res.render("user/signUp", {
         title: "User Signup",
         noHeader: true,
-        Err: Err
+        // Err: Err
       });
-      req.session.signupErr = null;
+      // req.session.signupErr = null;
     
     
   },
