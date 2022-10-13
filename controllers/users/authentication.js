@@ -84,7 +84,7 @@ module.exports = {
     //   Err = req.session.signupErr
     // }
 
-      res.render("user/legacy", {
+      res.render("user/signup", {
         title: "User Signup",
         noHeader: true,
         // Err: Err
