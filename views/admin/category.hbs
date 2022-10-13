@@ -4,15 +4,15 @@
     <div >
       <h2>Add Category</h2> 
       {{#with category}}
-      <form action="/admin/Category" method="post">
+      <form action="" id="category" method="post">
         <div class="form-group">
           <label for="Name">Category Name</label>
-          <input type="text" value="{{Category_name}}" name="Name" class="form-control" id="Name" />
+          <input required type="text" value="{{Category_name}}" name="Name" class="form-control" id="Name" />
 
         </div>
         <div class="form-group">
           <label for="Description">Description</label>
-          <input
+          <input required
             type="text"
             name="description" 
             class="form-control"
@@ -23,7 +23,7 @@
         </div>
          <div class="form-group">
           <label for="Name">Category Discount</label>
-          <input type="text" value="{{cdiscount}}" name="cdiscount" class="form-control" id="Name" />
+          <input required type="number" value="{{cdiscount}}" name="cdiscount" class="form-control" id="Name" />
 
         </div>
 
@@ -57,7 +57,7 @@
         <tbody>
           {{#each category}}
             <tr>
-              <th scope="row">{{@index}}</th>
+              <th scope="row">{{inc @index}}</th>
               <td>{{this.Category_name}}</td>
               <td>{{this.Category_description}}</td>
               <td>{{this.cdiscount}}</td>
@@ -85,3 +85,22 @@
   </div>
 
 </section> --}}
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  $("#category").submit(function(e) {
+    e.preventDefault()
+    $.ajax({
+      url: "/admin/Category",
+      method: "POST",
+      data: $("#category").serialize(),
+      success: function() {
+        window.location.reload()
+      },error: function(err) {
+        err = jQuery.parseJSON(err.responseText)
+        Swal.fire('Oops !',err,'error')
+      }
+    })
+  })
+</script>

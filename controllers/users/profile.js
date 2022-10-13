@@ -23,8 +23,11 @@ module.exports = {
      
       postAddress : (req, res) => {
         console.log(req.body)
-        res.cookie("address", req.body.address, { maxAge: 24*60*60*1000, httpOnly: true });
-        res.redirect("/checkout");
+        if(req.body.address === "address_not_selected"){
+          res.status(400).json("Please select a address")
+        } else {
+          res.status(200).json(req.body.address)
+        }
       },
       getInvoice : async (req,res) => {
         let orderDetails = await getPrintingDetails(req.params.id)

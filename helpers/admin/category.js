@@ -1,4 +1,5 @@
 const { promise } = require("bcrypt/promises");
+const createHttpError = require("http-errors");
 const { Types } = require("mongoose");
 const category = require("../../controllers/admin/category");
 const category_model = require("../../model/category_model");
@@ -26,6 +27,18 @@ module.exports = {
           console.log(err);
         });
     });
+  },
+  get_category_by_category_name: (category_name) => {
+    return new Promise((resolve, reject) => {
+      let regex = new RegExp(["^", category_name, "$"].join(""), "i")
+      category_model.findOne({Category_name : regex}).then((category) => {
+        if(category) { 
+          reject(createHttpError.Conflict("Category name must be unique"))
+        } else {
+          resolve()
+        }
+      })
+    })
   },
   get_category: (id) => {
     return new Promise((resolve, reject) => {

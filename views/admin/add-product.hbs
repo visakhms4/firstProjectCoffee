@@ -4,14 +4,14 @@
 
 <form action="/admin/addProduct" method="post" enctype="multipart/form-data" class="loginBox col-md6">
 <label class="fw-bold" for="productname">Product name</label >
-<input type="text" name="name" id="username" class="w-100 p-2 m-2 form-control">
+<input required type="text" name="name" id="username" class="w-100 p-2 m-2 form-control">
 
 
 <label class="fw-bold" for="des">Description</label>
 
-<input type="text" name="description" id="des" class="w-100 p-2 m-2 form-control">
+<input required type="text" name="description" id="des" class="w-100 p-2 m-2 form-control">
 <label class="fw-bold" for="rating">Rating</label>
-<input type="text" name="rating" id="rating" class="w-100 p-2 m-2 form-control">
+<input required type="text" name="rating" id="rating" class="w-100 p-2 m-2 form-control">
 
 
 <label class="fw-bold " for="cat">Category</label>
@@ -30,12 +30,12 @@
 
 
 <label class="fw-bold" for="">Price</label>
-<input type="number" name="price" id="price" class="w-100 p-2 m-2 form-control">
+<input required type="number" name="price" id="price" class="w-100 p-2 m-2 form-control">
 
 
 
 <label class="fw-bold" for="">Discounts</label>
-<input type="number" name="pdiscount" id="discount" class="w-100 p-2 m-2 form-control">
+<input required type="number" name="pdiscount" id="discount" class="w-100 p-2 m-2 form-control">
 
 
 
@@ -76,7 +76,7 @@
 </div>
 
 
-          <input type="file" name="image" class="form-control" onchange="changeImg(event)" id="id_image1"/><br />
+          <input required type="file" name="image" class="form-control" onchange="changeImg(event)" id="id_image1"/><br />
           
            
 
@@ -102,13 +102,13 @@
         }
          const imagebox1 = document.getElementById("image-box1");
   const crop_btn1 = document.getElementById("crop-btn1");
-  const input1 = document.getElementById("id_image1");
+  const input required1 = document.getElementById("id_image1");
  
 
   // When user uploads the image this event will get triggered
-  input1.addEventListener("change", () => {
-    // Getting image file object from the input variable
-    const img_data1 = input1.files[0];
+  input required1.addEventListener("change", () => {
+    // Getting image file object from the input required variable
+    const img_data1 = input required1.files[0];
     // createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
     // The new object URL represents the specified File object or Blob object.
     const url1 = URL.createObjectURL(img_data1);
@@ -138,7 +138,7 @@
       // This method coverts the selected cropped image on the cropper canvas into a blob object
       cropper1.getCroppedCanvas().toBlob((blob) => {
         // Gets the original image data
-        let fileInputElement1 = document.getElementById("id_image1");
+        let fileinput requiredElement1 = document.getElementById("id_image1");
         // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
         let file1 = new File([blob], img_data1.name, {
           type: "image/*",
@@ -149,9 +149,9 @@
         // Add the cropped image file to the container
         container1.items.add(file1);
         // Replace the original image file with the new cropped image file
-        fileInputElement1.files = container1.files;
+        fileinput requiredElement1.files = container1.files;
         document.getElementById("imgView1").src = URL.createObjectURL(
-          fileInputElement1.files[0]
+          fileinput requiredElement1.files[0]
         );
         // Hide the cropper box
         document.getElementById("image-box1").style.display = "none";
@@ -170,13 +170,13 @@
         }
 const imagebox2 = document.getElementById("image-box2");
   const crop_btn2 = document.getElementById("crop-btn2");
-  const input2 = document.getElementById("id_image2");
+  const input required2 = document.getElementById("id_image2");
   
 
   // When user uploads the image this event will get triggered
-  input2.addEventListener("change", () => {
-    // Getting image file object from the input variable
-    const img_data2 = input2.files[0];
+  input required2.addEventListener("change", () => {
+    // Getting image file object from the input required variable
+    const img_data2 = input required2.files[0];
     // createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
     // The new object URL represents the specified File object or Blob object.
     const url2 = URL.createObjectURL(img_data2);
@@ -206,7 +206,7 @@ const imagebox2 = document.getElementById("image-box2");
       // This method coverts the selected cropped image on the cropper canvas into a blob object
       cropper2.getCroppedCanvas().toBlob((blob) => {
         // Gets the original image data
-        let fileInputElement2 = document.getElementById("id_image2");
+        let fileinput requiredElement2 = document.getElementById("id_image2");
         // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
         let file2 = new File([blob], img_data2.name, {
           type: "image/*",
@@ -217,9 +217,9 @@ const imagebox2 = document.getElementById("image-box2");
         // Add the cropped image file to the container
         container2.items.add(file2);
         // Replace the original image file with the new cropped image file
-        fileInputElement2.files = container2.files;
+        fileinput requiredElement2.files = container2.files;
         document.getElementById("imgView2").src = URL.createObjectURL(
-          fileInputElement2.files[0]
+          fileinput requiredElement2.files[0]
         );
         // Hide the cropper box
         document.getElementById("image-box2").style.display = "none";
@@ -237,13 +237,13 @@ const imagebox2 = document.getElementById("image-box2");
         }
 const imagebox3 = document.getElementById("image-box3");
   const crop_btn3 = document.getElementById("crop-btn3");
-  const input3 = document.getElementById("id_image3");
+  const input required3 = document.getElementById("id_image3");
 
 
   // When user uploads the image this event will get triggered
-  input3.addEventListener("change", () => {
-    // Getting image file object from the input variable
-    const img_data3 = input3.files[0];
+  input required3.addEventListener("change", () => {
+    // Getting image file object from the input required variable
+    const img_data3 = input required3.files[0];
     // createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
     // The new object URL represents the specified File object or Blob object.
     const url3 = URL.createObjectURL(img_data3);
@@ -273,7 +273,7 @@ const imagebox3 = document.getElementById("image-box3");
       // This method coverts the selected cropped image on the cropper canvas into a blob object
       cropper3.getCroppedCanvas().toBlob((blob) => {
         // Gets the original image data
-        let fileInputElement3 = document.getElementById("id_image3");
+        let fileinput requiredElement3 = document.getElementById("id_image3");
         // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
         let file3 = new File([blob], img_data3.name, {
           type: "image/*",
@@ -284,9 +284,9 @@ const imagebox3 = document.getElementById("image-box3");
         // Add the cropped image file to the container
         container3.items.add(file3);
         // Replace the original image file with the new cropped image file
-        fileInputElement3.files = container3.files;
+        fileinput requiredElement3.files = container3.files;
         document.getElementById("imgView3").src = URL.createObjectURL(
-          fileInputElement3.files[0]
+          fileinput requiredElement3.files[0]
         );
         // Hide the cropper box
         document.getElementById("image-box3").style.display = "none";

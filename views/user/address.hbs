@@ -20,7 +20,7 @@
   screen and (max-width: 768px) { .options { margin: 1rem 2.6rem; } .outer{
   padding: 1rem 1rem; } }
 </style>
-<form action="/address" method="post">
+<form action="" id="address" method="post">
   <div class=" pt-5 d-flex flex-wrap">
     <div class="col-lg-9 col-sm-12 col-12 outer">
       <nav aria-label="breadcrumb">
@@ -34,11 +34,18 @@
           </li>
         </ol>
       </nav>
+      <input required
+      hidden checked
+            type="radio"
+            name="address"
+            value="address_not_selected"
+            class="my-auto me-4 col-1 col-sm-1"
+          />
       <!-- ================================================================================ -->
       {{#each address}}
         <div class="d-flex justify-content-between mb-5 w-100 flex-wrap">
         <div class="d-flex col-12 col-sm-8">
-          <input required required
+          <input required 
             type="radio"
             name="address"
             value="{{this._id}}"
@@ -121,6 +128,37 @@
     </div>
   </div>
 </form>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+  $("#address").submit(function(e) {
+    console.log(e)
+    e.preventDefault()
+    $.ajax({
+      url:"/address",
+      method: "POST",
+      data: $("#address").serialize(),
+      success: function(data) {
+        var now = new Date();
+        var time = now.getTime();
+        var expireTime = time + 1000*36000;
+        now.setTime(expireTime);
+        document.cookie = `address=${data};expires=`+now.toUTCString();
+        location.href = "/checkout"
+      },error: function(err) {
+        err = jQuery.parseJSON(err.responseText)
+        //alert(err)
+        Swal.fire(
+           'Oops !',
+            err,
+             'error'
+)
+      }
+    })
+  })
+</script>
 
 <script>
 function applyCoupon(userid) {

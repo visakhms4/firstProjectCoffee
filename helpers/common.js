@@ -219,7 +219,7 @@ module.exports = {
             let val = data[0] ? data[0].total : "0";
           
               
-
+            console.log(val)
                 resolve(val);
               
           });
