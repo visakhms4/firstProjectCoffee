@@ -2,6 +2,7 @@ const { token } = require("morgan");
 const { getTotalAmount, updateUser } = require("../../helpers/common");
 const { getPrintingDetails } = require("../../helpers/user/orders");
 const { updatePassword, getAddress, addAddress } = require("../../helpers/user/users");
+const address_model = require("../../model/address_model");
 const user_model = require("../../model/user_model");
 const { createInvoice } = require("./invoice");
 const { getUserData } = require("./user");
@@ -139,5 +140,14 @@ module.exports = {
           
           res.redirect("/address");
         })},  
+        removeProfileAddress : (id)=> {
+          return new Promise((resolve,reject)=>{
+            address_model.deleteOne({_id:id}).then((data)=>{
+              console.log(data);
+            })
+            resolve()
+          })
+
+        }
      
 }

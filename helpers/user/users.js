@@ -165,6 +165,7 @@ module.exports = {
         postOffice: postOffice,
       };
       address_model.create(addressObj).then((state) => {
+        console.log("solved");
         resolve(state);
       });
     });

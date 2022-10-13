@@ -13,7 +13,7 @@ const {
   post_otp_login,
 } = require("../controllers/users/authentication");
 const { getHome, getProductPage } = require("../controllers/users/main");
-const { get_profile, updateUser, getAddressProfile, postAddress, getInvoice, getEditUser, postEditUSer, getChangePassword, postChangePassword, getprofileDetails, getProfileAddAddress, postProfileAddAddress } = require("../controllers/users/profile");
+const { get_profile, updateUser, getAddressProfile, postAddress, getInvoice, getEditUser, postEditUSer, getChangePassword, postChangePassword, getprofileDetails, getProfileAddAddress, postProfileAddAddress, removeProfileAddress } = require("../controllers/users/profile");
 const { getUserData, get_products, get_cart_page, get_add_to_cart, get_checkout, post_checkout, post_changequantity, post_remove_cart, getAddresPayment, get_snacks } = require("../controllers/users/user");
 const {
   addToCart,
@@ -42,6 +42,7 @@ const cart_model = require("../model/cart_model");
 const createHttpError = require("http-errors");
 const { updateCoupon, verifyWallet, resetWallet } = require("../helpers/user/coupon");
 const { token } = require("morgan");
+const { route } = require("./admin");
 
 
 
@@ -207,6 +208,32 @@ router.get("/order/cancel/:orderId/:productId",getPaypalOrder)
 //profile address
 
 router.get("/profileaddress",userAuth,getprofileDetails);
+router.get("/profile/addAddress",(req,res) => {
+  console.log("entered");
+  res.render("user/profile_add_address")
+});
+router.post("/profile/addAddress",(req,res) => {
+
+
+  
+  const user = req.session.user.userId;
+  console.log(user);
+  addAddress(req.body,user).then(()=> {
+      res.redirect("/profileaddress")
+
+
+  })
+
+});
+router.get("/profile/Address/Remove/:id",(req,res)=> {
+  console.log("reached");
+  removeProfileAddress(req.params.id).then(()=>{
+    res.redirect("/profileaddress")
+    console.log("succcessss");
+  })
+
+
+})
 router.get("/changepassword",getChangePassword);
 router.post("/changepassword",postChangePassword)
 
