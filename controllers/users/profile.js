@@ -136,8 +136,8 @@ module.exports = {
         let user = req.session.user ? req.session.user : null;
         console.log("in address router",user)
         addAddress(req.body, user.userId).then((address) => {
-          console.log(address)
+          console.log(add)
           res.redirect("/address");
-        })},
+        })},  
      
 }
