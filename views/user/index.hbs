@@ -1,40 +1,44 @@
 <link rel="stylesheet" href="/public/stylesheets/homepage.css" />
+<body>
+<section class="main_body">
+  <div class="row container-fluid">
+    <div class="right_mb col-xl-6 col-lg-6 col-md-6 col-sm-12">
+      <div class="enjoy">
 
-<section class="main_body container-lg ">
-  <div class="row">
-  <div class="right_mb col-xl-6">
-    <div class="enjoy">
-      
-      <h1 style="font-size:53px ;">Enjoy your coffee before your activity</h1>
-      <p>Boost your productivity and build your mood with a glass of coffee in
-        this morning</p>
-        
-    <a href="/products" class="btn_order btn btn-danger "><span class="">Order Now</span></a>
-    </div>
-  </div>
+        <h1 style="font-size:53px ;">Enjoy your coffee before your activity</h1>
+        <p>Boost your productivity and build your mood with a glass of coffee in
+          this morning</p>
 
-  <div class="left_mb col-xl-6">
-    
-    <div class="left_mb_img">
-    
-      <img class="img-main img-fluid" src="/images/cofee-home.webp" alt="" />
-
+        <a href="/products" class="btn_order btn btn-danger"><span
+            class=""
+          >Order Now</span></a>
+      </div>
     </div>
 
-  </div>
+    <div class="left_mb col-xl-6 col-lg-6 col-md-6 col-sm-12">
+
+      <div class="left_mb_img">
+
+        <img class="img-main img-fluid" src="/images/cofee-home.webp" alt="" />
+
+      </div>
+
+    </div>
   </div>
 </section>
-<br>
-<br>
+<br />
+<br />
+<div class="container-fluid">
 
-<section class="popular container-fluid">
-  <div class="popular-bg d-flex justify-content-center row mt-5">
-    <h2 class="ph2">TRENDING NOW </h2>
+
+  <div class="popular-bg h-2 ">
+    <h2 class="ph2 text-center">TRENDING NOW </h2>
   </div>
-  <div class="card-wraper pt-3 row row-cols-1 row-cols-md-2 g-4 ">
-<div class="popular_container col" >
-    {{#each products}}
-     <div class="">
+
+  {{!-- <div class="card-wraper container-fluid pt-3 ">
+    <div class="popular_container row row-cols-1 row-cols-md-2 g-4">
+      {{#each products}}
+        <div class="col">
 
           <div class="card m-3" style="width: 18rem; height:25rem;  ">
             <img
@@ -47,7 +51,10 @@
             <div class="card-body1 p-2">
               <h5 class="card-title1">{{this.Product_name}}</h5>
               <p class="card-text2 mb-1">{{this.description}}</p>
-              <div class="d-flex justify-content-between mb-2" style="width: 100%;">
+              <div
+                class="d-flex justify-content-between mb-2"
+                style="width: 100%;"
+              >
                 <p class="item-price my-auto"><strike>₹{{this.Price}}</strike>
                   <b>₹{{this.cd_price}}</b></p>
                 <div class="d-flex">
@@ -72,85 +79,111 @@
 
         </div>
 
-
-    {{/each}}
-
-      
+      {{/each}}
 
     </div>
 
   </div>
+  </div> --}}
 
-</section>
 
-<section class="delivery">
+
   <div class="delivery_header">
     <h2>How to use delivery service</h2>
   </div>
-  <div class="delivery_card-container row row-cols-1 row-cols-md-3 d-flex justify-content-evenly">
-
-    <div class="card col " style="width: 18rem;">
+<div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-evenly ">
+  <div class="col" style="width: 18rem;">
+    <div class="card h-auto">
       <img src="/images/del4.jfif" class="card-img-top" alt="..." />
       <div class="card-body">
-        <p class="card-text">Choose your coffee.</p>
+        <h5 class="card-title">Choose your coffee.</h5>
         <p class="card-text1">there are 15+ cofees for you</p>
       </div>
-    </div>
 
-    <div class="card col" style="width: 18rem;">
-      <img src="/images/del-5.png" class="card-img-top" alt="..." />
+    </div>
+  </div>
+  <div class="col" style="width: 18rem;" >
+    <div class="card">
+  <img src="/images/del-5.png" class="card-img-top" style="height: 242px;" alt="..." />
       <div class="card-body">
-        <p class="card-text">We deliver it to you</p>
-        <p class="card-text1" >Choose your delivery service</p>
+        <h5 class="card-title">We deliver it to you</h5>
+        <p class="card-text1">Choose your delivery service</p>
       </div>
-    </div>
 
-    <div class="card col" style="width: 18rem;">
+    </div>
+  </div>
+  <div class="col" style="width: 18rem;">
+    <div class="card h-auto">
       <img src="/images/del6.jfif" class="card-img-top" alt="..." />
       <div class="card-body">
-        <p class="card-text">Enjoy your coffee.</p>
-        <p class="card-text1"  >Complete your day..!</p>
+        <h5 class="card-title">Enjoy your coffee.</h5>
+        <p class="card-text1">Complete your day..!</p>
       </div>
     </div>
-
   </div>
-</section>
+</div>
+
+    <hr class="bottom-hr mt-3">
 
 <section class="aboutUs container-fluid">
   <div class="row">
-  <div class="aboutus_img col-xl-6 col-lg-6 col-md-6 col-sm-1">
-    <div class="abts_img_container">
-      <img class="abts-img-file img-fluid" src="/images/aboutus.jpg" alt="" />
+    <div class="aboutus_img col-xl-6 col-lg-6 col-md-6 col-sm-12">
+      <div class="abts_img_container">
+        <img class="abts-img-file img-fluid" src="/images/aboutus.jpg" alt="" />
 
+      </div>
+    </div>
+    <div class="aboutus_content col">
+      <div class="aboutus_content_wrapper">
+        <h1>About Us</h1>
+        <p>We provide quality coffee, and ready to deliver</p>
+
+        <p>We are a compony that makes and distributes delicious drinks.Our main
+          product is made with a scecret recipe and available in stores world
+          wide.</p>
+        <a href="/products">
+          <button class="abtusbtn">Get your coffee</button></a>
+      </div>
     </div>
   </div>
-  <div class="aboutus_content col">
-    <div class="aboutus_content_wrapper">
-      <h1>About Us</h1>
-      <p>We provide quality coffee, and ready to deliver</p>
-
-      <p>We are a compony that makes and distributes delicious drinks.Our main
-        product is made with a scecret recipe and available in stores world
-        wide.</p>
-<a href="/products"> <button class="abtusbtn">Get your coffee</button></a>
-    </div>
-  </div>
-  </div>
 
 
-</section>
-<section class="brands ">
-  <div class="brands_header">
+
+<br>
+
+
+  </section>
+{{!-- <section class="brands">
+  <div class="brands_header container-fluid">
     <hr class="brands_hr" />
     <h3>Brands We Work With</h3>
     <hr class="brands_hr" />
   </div>
-  <div class="brands_container">
     <img
       class="brands_img img-fluid"
       src="http://www.nationalcoffee.net/wp-content/uploads/2017/11/coffee-logos.png"
       alt=""
     />
   </div>
-<hr class="bottom-hr" />
-</section> 
+  <hr class="bottom-hr" />
+</section>  --}}
+
+<br>
+<div class="container-fluid">
+
+ <hr class="bottom-hr above_brands_hr">
+    <h3 class="text-center">Brands We Work With</h3>
+ <hr class="bottom-hr ">
+  <div class="w-100 d-flex justify-content-center">
+ <img
+      class="brands_img img-fluid m-auto"
+      src="http://www.nationalcoffee.net/wp-content/uploads/2017/11/coffee-logos.png"
+      alt=""
+    />
+  </div>
+
+</div>
+
+
+
+</body>
