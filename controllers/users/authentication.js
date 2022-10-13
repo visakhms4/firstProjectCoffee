@@ -77,6 +77,7 @@ module.exports = {
   },
   
   getSignUp: (req, res) => {
+    console.log("entered");
     
     let Err = "";
     if(req.session?.signupErr){

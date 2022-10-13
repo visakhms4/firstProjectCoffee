@@ -116,9 +116,9 @@
   </div>
 </section>
 
-<section class="aboutUs container-lg">
+<section class="aboutUs container-fluid">
   <div class="row">
-  <div class="aboutus_img col-xl-6">
+  <div class="aboutus_img col-xl-6 col-lg-6 col-md-6 col-sm-1">
     <div class="abts_img_container">
       <img class="abts-img-file img-fluid" src="/images/aboutus.jpg" alt="" />
 
@@ -153,113 +153,4 @@
     />
   </div>
 <hr class="bottom-hr" />
-</section>
-
-{{!-- <section class="footer">
-  <div class="logo">
-    <img style="width: 200px; height:200px" src="/images/cft.jpeg" alt="" />
-
-  </div>
-  <div class="footer_list">
-    <div class="list">
-      <ul>
-        <li class="footer_head fw-bold">SITE MAP</li>
-        <li>Home</li>
-        <li>About us</li>
-        <li>Offers</li>
-        <li>Legacy</li>
-      </ul>
-    </div>
-    <div class="list">
-      <ul>
-        <li class="footer_head fw-bold">SOCIALS</li>
-        <li>Facebook</li>
-        <li>Linkdin</li>
-        <li>Instagram</li>
-        <li>Twitter</li>
-      </ul>
-    </div>
-    <div class="list">
-      <ul>
-        <li class="footer_head fw-bold">HEAD OFFICE</li>
-        <li>Home</li>
-        <li>About us</li>
-        <li>Offers</li>
-
-      </ul>
-    </div>
-
-  </div>
-  <div class="copyright">
-
-  </div>
-
-</section>
- --}}
-
-
- <div class="container-fluid">
-<div class="row">
-<div class="col-lg-6 col-md-6 col-sm-12">
-<div class="single-product mb-50">
-<div class="text-center">
-<img style="width: 50%; " class="rounded"   src="/product_images/aboutus.jpg">
-</div>
-</div>
-</div>
-<div class="col-lg-6 col-md-6 col-sm-12">
-<div class="mb-50">
-<div class="align-self-center ">
-<h1>About Us</h1>
-<p>We provide Quality coffee,and ready to deliver</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-{{!-- // --}}
-
-<div class="container-fluid">
-<div class="row">
-<div class="col-lg-6 col-md-6 col-sm-12">
-<div class="mb-50">
-<div class="text-center ">
-<h1>Enjoy your coffee before your activity</h1>
-<p>Boot your productivity and build your mood with a glass of coffee in the morning</p>
-<button>Order Now</button>
-</div>
-</div>
-</div>
-<div class="col-lg-6 col-md-6 col-sm-12">
-<div class="mb-50">
-<div class="text-center">
-<img style="width: 80%; " class="rounded"   src="/images/cofee-home.webp">
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="row">
-{{#each products}}
-<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-
-<div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;">
-<div class="popular-img">
-
-<div class="favorit-items">
-
-<img src="{{this._id}}">
-</div>
-</div>
-<div class="popular-caption">
-  <h3>{{this.product_name}}</h3>
-<h3>{{this.description}}</h3>
-<span>{{this.price}}</span>
-<button>Add to Cart</button>
-</div>
-</div>
-</div>
-{{/each}}
-</div>
-
+</section> 
