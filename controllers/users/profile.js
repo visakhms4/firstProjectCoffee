@@ -120,7 +120,7 @@ module.exports = {
             console.log(address);
             let user = token
             
-            res.render("user/profileaddress", {
+            res.render("user/profileAddress", {
               total: total,
               address: address,
               User: User,
