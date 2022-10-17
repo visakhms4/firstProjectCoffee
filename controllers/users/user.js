@@ -127,7 +127,7 @@ module.exports = {
             console.log("place", req.body);
             console.log("id", data.id);
             console.log("ttt", data.total);
-            if (req.body.paymentMethod == "cod") {
+            if (req.body.paymentMethod == "cashOnDelivery") {
               res.status(200).json({ status: true });
             } else if (req.body.paymentMethod == "paypal") {
               res.status(200).json({ status: true });

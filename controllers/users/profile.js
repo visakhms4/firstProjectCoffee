@@ -138,10 +138,10 @@ module.exports = {
       },
       postProfileAddAddress : (req, res) => {
         let user = req.session.user ? req.session.user : null;
-        console.log("in address router",user)
+        console.log("in address routerrrrrr",user)
         addAddress(req.body, user.userId).then((address) => {
           
-          res.redirect("/address");
+          res.redirect("/addres");
         })},  
         removeProfileAddress : (id)=> {
           return new Promise((resolve,reject)=>{

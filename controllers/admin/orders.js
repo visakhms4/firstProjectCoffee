@@ -51,6 +51,9 @@ console.log(`Time: ${dateObj.toISOString()}`);
     
     
     },
+    getReport: ()=> {
+      
+    }
 };
 
 

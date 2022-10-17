@@ -1,6 +1,7 @@
 const { reject } = require("bcrypt/promises");
 const createHttpError = require("http-errors");
 const { Types, Promise } = require("mongoose");
+const { response } = require("../../app");
 const cart_model = require("../../model/cart_model");
 const coupon_model = require("../../model/coupon_model");
 const usedCoupon = require("../../model/usedCoupon");
@@ -76,45 +77,46 @@ module.exports = {
       
       
           
-        } else if (referralData) {
-          const wallet = referralData.User_Wallet;
+        // } else if (referralData) {
+        //   const wallet = referralData.User_Wallet;
 
-          console.log(wallet);
-          if (wallet != 0) {
-            // console.log("disss");
-            cart_model
-              .findOne({
-                userId: Types.ObjectId(userId),
-              })
-              .then((data) => {
-                // console.log(data.cartTotalAmount);
-                const total = data.cartTotalAmount - wallet;
-                cart_model
-                  .updateOne(
-                    {
-                      userId: Types.ObjectId(userId),
-                    },
-                    {
-                      $set: {
-                        cartTotalAmount: total,
-                      },
-                    }
-                  )
-                  .then((data) => {
-                    // console.log(data);
-                    response.discount = wallet;
-                    response.total = total;
-                    resetWallet(userId)
+        //   console.log(wallet);
+        //   if (wallet != 0) {
+        //     // console.log("disss");
+        //     cart_model
+        //       .findOne({
+        //         userId: Types.ObjectId(userId),
+        //       })
+        //       .then((data) => {
+        //         // console.log(data.cartTotalAmount);
+        //         const total = data.cartTotalAmount - wallet;
+        //         cart_model
+        //           .updateOne(
+        //             {
+        //               userId: Types.ObjectId(userId),
+        //             },
+        //             {
+        //               $set: {
+        //                 cartTotalAmount: total,
+        //               },
+        //             }
+        //           )
+        //           .then((data) => {
+        //             // console.log(data);
+        //             response.discount = wallet;
+        //             response.total = total;
+        //             resetWallet(userId)
 
-                    resolve(response);
-                  });
-              });
-          } else if (wallet == 0) {
-            // console.log("empty wallet");
-            let err = "Wallet is empty";
-            reject(err);
-          }
-        } else {
+        //             resolve(response);
+        //           });
+        //       });
+        //   } else if (wallet == 0) {
+        //     // console.log("empty wallet");
+        //     let err = "Wallet is empty";
+        //     reject(err);
+        //   }
+        // } 
+      } else {
           let err = "Coupon doesnot match";
           console.log("hhhh", err);
           reject(err);
@@ -130,6 +132,55 @@ module.exports = {
       }
     });
   },
+  useWallet: (userId)=>{
+    console.log(userId);
+    let response = {};
+    return new Promise((resolve,reject)=> {
+      user_model.findById(userId).then((data)=> {
+        console.log("sddscdc",data.User_Wallet);
+        let wallet = data.User_Wallet;
+        if (wallet != 0) {
+           console.log("disss");
+          cart_model
+            .findOne({
+              userId: Types.ObjectId(userId),
+            })
+            .then((data) => {
+              // console.log(data.cartTotalAmount);
+              const total = data.cartTotalAmount - wallet;
+              cart_model
+                .updateOne(
+                  {
+                    userId: Types.ObjectId(userId),
+                  },
+                  {
+                    $set: {
+                      cartTotalAmount: total,
+                    },
+                  }
+                )
+                .then((data) => {
+                  // console.log(data);
+                  response.discount = wallet;
+                  response.total = total;
+                  resetWallet(userId)
+
+                  resolve(response);
+                });
+            });
+        } else  {
+           console.log("empty wallet");
+          let err = "Wallet is empty";
+          reject(err);
+        }
+        
+    
+      
+      })
+    })
+
+
+  }
  
   
 };

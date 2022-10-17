@@ -12,14 +12,10 @@
 </style>
 <form id="checkout-form" method="post">
   <div class="container1 pt-5 d-flex flex-wrap">
-    <div class="col-lg-9 col-sm-12 col-12 outer">
+ <div class="col-lg-9 col-sm-12 col-12 outer">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb py-4">
-          <a
-            class="breadcrumb-item text-muted"
-            href="/address"
-            aria-current="page"
-          >
+          <a class="breadcrumb-item text-muted" href="/address" aria-current="page">
             Address
           </a>
           <li class="breadcrumb-item">
@@ -30,48 +26,32 @@
       <input type="radio" name="paymentMethod" hidden id="paymentMethodInp" />
       <div class="accordion" id="accordionExample">
         <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+          
+        </div>
+        <div class="accordion-item">
           <h2 class="accordion-header" id="headingOne">
-            <button
-              class="accordion-button"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#cashOnDelivery"
-              aria-expanded="false"
-              aria-controls="cashOnDelivery"
-            >
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cashOnDelivery"
+              aria-expanded="true" aria-controls="cashOnDelivery">
               Cash On Delivery
             </button>
           </h2>
-          <div
-            id="cod"
-            class="accordion-collapse collapse show"
-            aria-labelledby="headingOne"
-            data-bs-parent="#accordionExample"
-          >
+          <div id="cashOnDelivery" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
             <div class="accordion-body">
               <h6>Cash on Delivery</h6>
-            </div>
+            </div> 
           </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header" id="headingTwo">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#razorPay"
-              aria-expanded="false"
-              aria-controls="razorPay"
-            >
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#razorPay" aria-expanded="false" aria-controls="razorPay">
               Razor Pay
             </button>
           </h2>
-          <div
-            id="razorPay"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingTwo"
-            data-bs-parent="#accordionExample"
-          >
+          <div id="razorPay" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+            data-bs-parent="#accordionExample">
             <div class="accordion-body">
               <h6>Razor Pay</h6>
             </div>
@@ -79,32 +59,21 @@
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header" id="headingThree">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#paypal"
-              aria-expanded="false"
-              aria-controls="paypal"
-            >
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#paypal"
+              aria-expanded="false" aria-controls="paypal">
               Paypal
             </button>
           </h2>
-          <div
-            id="paypal"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingThree"
-            data-bs-parent="#accordionExample"
-          >
+          <div id="paypal" class="accordion-collapse collapse" aria-labelledby="headingThree"
+            data-bs-parent="#accordionExample">
             <div class="accordion-body">
               <div id="paypal-button-container"></div>
             </div>
           </div>
         </div>
         <div class="pt-5">
-          <h6 class="mb-0"><a href="/address" class="text-body"><i
-                class="fas fa-long-arrow-alt-left me-2"
-              ></i>Back to Address</a></h6>
+          <h6 class="mb-0"><a href="/address" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back to
+              Address</a></h6>
         </div>
       </div>
     </div>
@@ -117,18 +86,18 @@
         <p>Price</p>
         <p>₹{{total}}</p>
       </div>
-      <div class="d-flex justify-content-between w-100">
+      {{!-- <div class="d-flex justify-content-between w-100">
         <p>Discount</p>
         <p>- ₹<span id="discount">0</span></p>
-      </div>
+      </div> --}}
       <div class="d-flex justify-content-between w-100">
         <p>Shipping</p>
         <p class="text-purple">Free</p>
       </div>
-      <div class="d-flex justify-content-between w-100">
+      {{!-- <div class="d-flex justify-content-between w-100">
         <p>Coupon Applied</p>
         <p>₹0.00</p>
-      </div>
+      </div> --}}
       <hr />
       <div class="d-flex justify-content-between w-100">
         <p class="text-purple">TOTAL</p>
@@ -142,6 +111,9 @@
       <button class="btn bg_purple  w-100 mt-3" id="checkout">PLACE
         ORDER</button>
     </div>
+
+    </div>
+    
   </div>
 </form> 
 

@@ -40,7 +40,7 @@ const { Promise } = require("mongoose");
 const { reject } = require("bcrypt/promises");
 const cart_model = require("../model/cart_model");
 const createHttpError = require("http-errors");
-const { updateCoupon, verifyWallet, resetWallet } = require("../helpers/user/coupon");
+const { updateCoupon, verifyWallet, resetWallet, useWallet } = require("../helpers/user/coupon");
 const { token } = require("morgan");
 const { route } = require("./admin");
 
@@ -152,6 +152,21 @@ router.post("/address/applyCoupon",(req,res)=>{
     err.message
   })
 
+});
+router.post("/address/redeemWallet",(req,res)=> {
+  console.log("wallet",req.body);
+const id = req.body.id; 
+console.log("dddddddddd",id);
+
+  useWallet(id).then((response)=>{
+    res.status(200).json(response)
+  }).catch((err) => {
+    const response = {}
+    console.log("jgjhg",err);
+     response.err=err;
+     res.json(response)
+     err.message
+   })
 })
 
 router.post("/address",userAuth,postAddress);

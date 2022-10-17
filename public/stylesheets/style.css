@@ -283,25 +283,30 @@ color: white;
 .card-img-top{
   height: 66%;
 }
-.card-body
-{
-background-color: #6F4E37;
+#browncard{
+  background-color: #71503a;
+}
 
-}
-.card-text{
-  color: white;
-  font-size: large  ;
-  font-weight: 500;
-}
 .card-text1{
   color: white;
 
 }
-@media screen and (max-width : 700px) { 
+@media screen and (max-width : 600px) { 
   .aboutUs {
       display: none;
   }
   .above_brands_hr {
     display: none;
   }
+  .footerimg{
+    display: none;
+  }
+  .textAbt{
+    display:none;
+  }
+  .aboutus_content{
+    display: none;
+  }
 }
+
+

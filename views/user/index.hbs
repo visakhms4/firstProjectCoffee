@@ -1,8 +1,7 @@
 <link rel="stylesheet" href="/public/stylesheets/homepage.css" />
-<body>
 <section class="main_body">
-  <div class="row container-fluid">
-    <div class="right_mb col-xl-6 col-lg-6 col-md-6 col-sm-12">
+  <div class="container-fluid d-flex flex-wrap">
+    <div class="right_mb col-12 col-xl-6 col-lg-6">
       <div class="enjoy">
 
         <h1 style="font-size:53px ;">Enjoy your coffee before your activity</h1>
@@ -15,7 +14,7 @@
       </div>
     </div>
 
-    <div class="left_mb col-xl-6 col-lg-6 col-md-6 col-sm-12">
+    <div class="left_mb col-12 col-xl-6 col-lg-6">
 
       <div class="left_mb_img">
 
@@ -28,84 +27,74 @@
 </section>
 <br />
 <br />
-<div class="container-fluid">
 
+<div class="popular-bg h-2">
+  <h2 class="ph2 text-center">TRENDING NOW </h2>
+</div>
+{{! // }}
+<div>
+  <div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-evenly">
+    {{#each products}}
+      <div class="col" style="width: 18rem;">
+        <div class="card h-100">
+          <img
+            src="/product_images/{{this._id}}.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title"> {{this.Product_name}}</h5>
+            <p class="card-text">{{this.description}}</p>
+            <div
+              class="d-flex justify-content-between mb-2"
+              style="width: 100%;"
+            >
+              <p class="item-price my-auto"><strike>₹{{this.Price}}</strike>
+                <b>₹{{this.cd_price}}</b></p>
+              <div class="d-flex">
+                <p class="item-rating my-auto me-2">
+                  <b>{{this.Rating}}</b></p>
 
-  <div class="popular-bg h-2 ">
-    <h2 class="ph2 text-center">TRENDING NOW </h2>
-  </div>
-
-  {{!-- <div class="card-wraper container-fluid pt-3 ">
-    <div class="popular_container row row-cols-1 row-cols-md-2 g-4">
-      {{#each products}}
-        <div class="col">
-
-          <div class="card m-3" style="width: 18rem; height:25rem;  ">
-            <img
-              src="/product_images/{{this._id}}.jpg"
-              width="18rem"
-              height="50%"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body1 p-2">
-              <h5 class="card-title1">{{this.Product_name}}</h5>
-              <p class="card-text2 mb-1">{{this.description}}</p>
-              <div
-                class="d-flex justify-content-between mb-2"
-                style="width: 100%;"
-              >
-                <p class="item-price my-auto"><strike>₹{{this.Price}}</strike>
-                  <b>₹{{this.cd_price}}</b></p>
-                <div class="d-flex">
-                  <p class="item-rating my-auto me-2">
-                    <b>{{this.Rating}}</b></p>
-
-                  <i
-                    class="fa fa-star my-auto"
-                    style="color: rgb(227, 239, 67)"
-                  ></i>
-                </div>
+                <i
+                  class="fa fa-star my-auto"
+                  style="color: rgb(227, 239, 67)"
+                ></i>
               </div>
-
-              <button class="ordrbtn">
-
-                <a href="/add-to-cart/{{this._id}}" class="button-trend">Add to
-                  cart</a>
-
-              </button>
             </div>
+
+            <button class="ordrbtn">
+              <a href="/add-to-cart/{{this._id}}" class="button-trend">Add to
+                cart</a></button>
           </div>
-
         </div>
-
-      {{/each}}
-
-    </div>
-
+      </div>
+    {{/each}}
   </div>
-  </div> --}}
+</div>
 
-
-
-  <div class="delivery_header">
-    <h2>How to use delivery service</h2>
-  </div>
-<div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-evenly ">
+<div class="delivery_header">
+  <h2>How to use delivery service</h2>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-evenly">
   <div class="col" style="width: 18rem;">
-    <div class="card h-auto">
+    <div class="card h-100">
       <img src="/images/del4.jfif" class="card-img-top" alt="..." />
-      <div class="card-body">
+      <div class="card-body" id="browncard">
         <h5 class="card-title">Choose your coffee.</h5>
         <p class="card-text1">there are 15+ cofees for you</p>
       </div>
 
     </div>
   </div>
-  <div class="col" style="width: 18rem;" >
-    <div class="card">
-  <img src="/images/del-5.png" class="card-img-top" style="height: 242px;" alt="..." />
-      <div class="card-body">
+  <div class="col" style="width: 18rem;">
+    <div class="card h-100">
+      <img
+        src="/images/del-5.png"
+        class="card-img-top"
+        style="height: 242px;"
+        alt="..."
+      />
+      <div class="card-body" id="browncard">
         <h5 class="card-title">We deliver it to you</h5>
         <p class="card-text1">Choose your delivery service</p>
       </div>
@@ -113,9 +102,9 @@
     </div>
   </div>
   <div class="col" style="width: 18rem;">
-    <div class="card h-auto">
+    <div class="card h-100">
       <img src="/images/del6.jfif" class="card-img-top" alt="..." />
-      <div class="card-body">
+      <div class="card-body" id="browncard">
         <h5 class="card-title">Enjoy your coffee.</h5>
         <p class="card-text1">Complete your day..!</p>
       </div>
@@ -123,19 +112,19 @@
   </div>
 </div>
 
-    <hr class="bottom-hr mt-3">
+<hr class="bottom-hr mt-3" />
 
 <section class="aboutUs container-fluid">
   <div class="row">
-    <div class="aboutus_img col-xl-6 col-lg-6 col-md-6 col-sm-12">
+    <div class="aboutus_img col-xl-6 col-lg-6 col-12">
       <div class="abts_img_container">
         <img class="abts-img-file img-fluid" src="/images/aboutus.jpg" alt="" />
 
       </div>
     </div>
-    <div class="aboutus_content col">
+    <div class="aboutus_content col-xl-6 col-lg-6 col-12">
       <div class="aboutus_content_wrapper">
-        <h1>About Us</h1>
+        <h1 class="textAbt">About Us</h1>
         <p>We provide quality coffee, and ready to deliver</p>
 
         <p>We are a compony that makes and distributes delicious drinks.Our main
@@ -147,35 +136,19 @@
     </div>
   </div>
 
+  <br />
+
+</section>
 
 
-<br>
-
-
-  </section>
-{{!-- <section class="brands">
-  <div class="brands_header container-fluid">
-    <hr class="brands_hr" />
-    <h3>Brands We Work With</h3>
-    <hr class="brands_hr" />
-  </div>
-    <img
-      class="brands_img img-fluid"
-      src="http://www.nationalcoffee.net/wp-content/uploads/2017/11/coffee-logos.png"
-      alt=""
-    />
-  </div>
-  <hr class="bottom-hr" />
-</section>  --}}
-
-<br>
+<br />
 <div class="container-fluid">
 
- <hr class="bottom-hr above_brands_hr">
-    <h3 class="text-center">Brands We Work With</h3>
- <hr class="bottom-hr ">
+  <hr class="bottom-hr above_brands_hr" />
+  <h3 class="text-center">Brands We Work With</h3>
+  <hr class="bottom-hr" />
   <div class="w-100 d-flex justify-content-center">
- <img
+    <img
       class="brands_img img-fluid m-auto"
       src="http://www.nationalcoffee.net/wp-content/uploads/2017/11/coffee-logos.png"
       alt=""
@@ -184,6 +157,5 @@
 
 </div>
 
-
-
-</body>
+<br>
+<br>

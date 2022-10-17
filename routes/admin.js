@@ -110,6 +110,16 @@ router.get("/discounts",adminAuth, getProductDiscount);
 router.post("/discounts/apply",applydiscount);
 
 router.post("/discounts/null",clearDiscount);
+router.get("/report",(req,res)=> {
+  console.log("entered");
+  order_models.find({}).limit(10).then((data)=>{
+    console.log(data);
+    res.render("admin/report.hbs",{admin:true,orders:data})
+  })
+  
+
+
+})
 
 
 router.get('/logout',getLogout);

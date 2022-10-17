@@ -103,8 +103,8 @@
         <p>₹{{total}}</p>
       </div>
       <div class="d-flex justify-content-between w-100">
-        <p>Discount</p>
-        <p >₹0.00</p>
+        <p >Discount</p>
+        <p id="wallet">₹0.00</p>
       </div>
       <div class="d-flex justify-content-between w-100">
         <p>Shipping</p>
@@ -117,13 +117,20 @@
       <hr />
       <div class="d-flex justify-content-between w-100">
         <p class="purple">TOTAL</p>
-        <p class="purple" id="Total">₹{{total}}</p>
+        <p class="purple" >₹<span id="Total">{{total}}</span></p>
       </div>
       <p>Estimated Delivery by <span class="fw-bold">01 Aug 2022</span></p>
       <input type="text" name="coupon" class="form-control" id="coupon" placeholder="Coupon Code / Wallet Redeem" />
       
             <button type="button" class="btn btn-success" style="margin-top: 1rem;" onclick="applyCoupon('{{user.userId}}')">Apply coupon</button>
             <span style="padding-left:.5rem ;" class="text-danger" id="error"></span>
+            <br>
+
+
+    
+      
+            <button type="button" class="btn btn-success" style="margin-top: 1rem;" onclick="redeemWallet('{{user.userId}}')">Redeem wallet</button>
+            <span style="padding-left:.5rem ;" class="text-danger" id="error2"></span>
       <button class="btn bg_purple  w-100 mt-3">CONTINUE TO PAYMENT</button>
     </div>
   </div>
@@ -174,6 +181,7 @@ function applyCoupon(userid) {
     success: function(response) {
       if(response.total){
       console.log(response.total)
+    
       $("#Total").text(response.total)
        $("#discount").text(response.discount)
         $("#error").text("")   
@@ -185,6 +193,41 @@ function applyCoupon(userid) {
   
     
     $("#error").text(response.err)
+
+      }
+    
+    }    
+    
+    
+  })
+}
+</script>
+
+<script>
+function redeemWallet(userid) {
+  console.log("begin")
+  console.log(userid)
+  const couoponCode = document.getElementById("coupon").value
+  
+  $.ajax({
+    url:"/address/redeemWallet",
+
+    data:{ id:userid},
+    method:"POST",
+    success: function(response) {
+      if(response.total){
+      console.log(response.total)
+      $("#Total").text(response.total)
+       $("#wallet").text(response.discount)
+        $("#error2").text("")   
+   
+ 
+
+      }else if(response.err){
+
+  
+    
+    $("#error2").text(response.err)
 
       }
     

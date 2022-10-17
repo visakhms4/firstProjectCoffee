@@ -1,0 +1,72 @@
+        {{>admin_sidebar}}
+
+		<div class="" style="overflow-x:auto; margin-left:8rem">
+		<table class='table' style=" max-width: -webkit-fill-available; " id="myTable">
+			<thead>
+				<tr>
+					<th class='' scope='col'>#</th>
+                    <th class='' scope='col'>OrderId</th>
+
+		
+				
+					<th class='' scope='col'>Total</th>
+					<th class='' scope='col'>Date</th>
+					<th class='' scope='col'>Payment</th>
+					<th class='' scope='col'>Status</th>
+				
+				</tr>
+			</thead>
+			<tbody>
+				{{#each orders}}
+					<tr>
+						<th class='' scope='row'>{{inc @index}}</th>
+						
+						<td class=''>{{this._id}}</td>
+						<td class=''>{{this.totalAmount}}</td>
+						<td> {{this.date}}</td>
+						<td> {{this.paymentMethod}}</td>
+						
+						<td>{{this.paymentStatus}}</td>
+						
+						
+						
+						
+					</tr>
+					
+				{{/each}}
+				
+
+			</tbody>
+		</table>
+		
+
+
+		</div>
+
+
+
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="//cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="//cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+<script>
+$(document).ready(function () {
+     $('#myTable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'print', {
+            extend: 'pdf',
+            text: 'Pdf',
+            filename: 'Homeland-Spices',
+            title: 'Homeland Spices Sales Report',
+        }
+        ]
+    });
+  });;
+</script>
